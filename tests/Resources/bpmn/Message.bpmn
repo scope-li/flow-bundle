@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0xza0e0" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:process id="Process_1yfid7h" isExecutable="true">
+    <bpmn:startEvent id="StartEvent1" name="StartEvent1">
+      <bpmn:outgoing>StartEvent1_ExclusiveGateway</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway" name="ExclusiveGateway">
+      <bpmn:incoming>StartEvent1_ExclusiveGateway</bpmn:incoming>
+      <bpmn:incoming>MessageStartEvent_ExclusiveGateway</bpmn:incoming>
+      <bpmn:outgoing>ExclusiveGateway_ReceiveTask</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="StartEvent1_ExclusiveGateway" sourceRef="StartEvent1" targetRef="ExclusiveGateway" />
+    <bpmn:sequenceFlow id="ExclusiveGateway_ReceiveTask" sourceRef="ExclusiveGateway" targetRef="ReceiveTask" />
+    <bpmn:sequenceFlow id="MessageStartEvent_ExclusiveGateway" sourceRef="MessageStartEvent" targetRef="ExclusiveGateway" />
+    <bpmn:startEvent id="StartEvent2" name="StartEvent2">
+      <bpmn:outgoing>StartEvent2_Task1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="ReceiveTask_MesssageEvent" sourceRef="ReceiveTask" targetRef="MessageEvent" />
+    <bpmn:intermediateCatchEvent id="MessageEvent" name="MessageEvent">
+      <bpmn:incoming>ReceiveTask_MesssageEvent</bpmn:incoming>
+      <bpmn:outgoing>MessageEvent_EndEvent</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0sv38l4" messageRef="Message_0rehkhs" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="MessageEvent_EndEvent" sourceRef="MessageEvent" targetRef="EndEvent1" />
+    <bpmn:receiveTask id="ReceiveTask" name="ReceiveTask" messageRef="Message_0cg4s4t">
+      <bpmn:incoming>ExclusiveGateway_ReceiveTask</bpmn:incoming>
+      <bpmn:outgoing>ReceiveTask_MesssageEvent</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:task id="Task1" name="Task1">
+      <bpmn:incoming>StartEvent2_Task1</bpmn:incoming>
+      <bpmn:outgoing>Task1_EndEvent3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="StartEvent2_Task1" sourceRef="StartEvent2" targetRef="Task1" />
+    <bpmn:endEvent id="EndEvent2" name="EndEvent2">
+      <bpmn:incoming>Task1_EndEvent3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Task1_EndEvent3" sourceRef="Task1" targetRef="EndEvent2" />
+    <bpmn:boundaryEvent id="BoundaryInterrupting" attachedToRef="Task1">
+      <bpmn:outgoing>BoundaryInterrupting_EndEvent3</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0idmpvj" messageRef="Message_0fmyjb3" />
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="EndEvent3" name="EndEvent3">
+      <bpmn:incoming>BoundaryInterrupting_EndEvent3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="BoundaryInterrupting_EndEvent3" sourceRef="BoundaryInterrupting" targetRef="EndEvent3" />
+    <bpmn:startEvent id="StartEvent3" name="StartEvent3">
+      <bpmn:outgoing>StartEvent3_Task2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task2" name="Task2">
+      <bpmn:incoming>StartEvent3_Task2</bpmn:incoming>
+      <bpmn:outgoing>Task2_EndEvent4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent4" name="EndEvent4">
+      <bpmn:incoming>Task2_EndEvent4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent5" name="EndEvent5">
+      <bpmn:incoming>BoundaryNonInterrupting_EndEvent5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="StartEvent3_Task2" sourceRef="StartEvent3" targetRef="Task2" />
+    <bpmn:sequenceFlow id="Task2_EndEvent4" sourceRef="Task2" targetRef="EndEvent4" />
+    <bpmn:sequenceFlow id="BoundaryNonInterrupting_EndEvent5" sourceRef="BoundaryNonInterrupting" targetRef="EndEvent5" />
+    <bpmn:boundaryEvent id="BoundaryNonInterrupting" cancelActivity="false" attachedToRef="Task2">
+      <bpmn:outgoing>BoundaryNonInterrupting_EndEvent5</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1i48phq" messageRef="Message_0n7k9yu" />
+    </bpmn:boundaryEvent>
+    <bpmn:startEvent id="MessageStartEvent" name="MessageStartEvent">
+      <bpmn:outgoing>MessageStartEvent_ExclusiveGateway</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1vu1hex" messageRef="Message_0xwsxlo" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent1" name="EndEvent1">
+      <bpmn:incoming>MessageEvent_EndEvent</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_0xwsxlo" name="StartMessage" />
+  <bpmn:message id="Message_0fmyjb3" name="BoundaryInterrupting" />
+  <bpmn:message id="Message_0n7k9yu" name="BoundaryNonInterrupting" />
+  <bpmn:message id="Message_0cg4s4t" name="ReceiveTask" />
+  <bpmn:message id="Message_0rehkhs" name="MessageEvent" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1yfid7h">
+      <bpmndi:BPMNEdge id="Flow_14anil9_di" bpmnElement="StartEvent1_ExclusiveGateway">
+        <di:waypoint x="188" y="110" />
+        <di:waypoint x="305" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="206" y="92" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h3429q_di" bpmnElement="ExclusiveGateway_ReceiveTask">
+        <di:waypoint x="355" y="110" />
+        <di:waypoint x="480" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kdeqkh_di" bpmnElement="MessageStartEvent_ExclusiveGateway">
+        <di:waypoint x="188" y="250" />
+        <di:waypoint x="330" y="250" />
+        <di:waypoint x="330" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u761f6_di" bpmnElement="ReceiveTask_MesssageEvent">
+        <di:waypoint x="580" y="110" />
+        <di:waypoint x="692" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rmub28_di" bpmnElement="MessageEvent_EndEvent">
+        <di:waypoint x="728" y="110" />
+        <di:waypoint x="872" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cdo70n_di" bpmnElement="StartEvent2_Task1">
+        <di:waypoint x="188" y="350" />
+        <di:waypoint x="300" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rs5sx6_di" bpmnElement="Task1_EndEvent3">
+        <di:waypoint x="400" y="350" />
+        <di:waypoint x="512" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_037dvwa_di" bpmnElement="BoundaryInterrupting_EndEvent3">
+        <di:waypoint x="380" y="408" />
+        <di:waypoint x="380" y="470" />
+        <di:waypoint x="512" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_125lyi3_di" bpmnElement="StartEvent3_Task2">
+        <di:waypoint x="188" y="580" />
+        <di:waypoint x="300" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m2mai5_di" bpmnElement="Task2_EndEvent4">
+        <di:waypoint x="400" y="580" />
+        <di:waypoint x="512" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18vptay_di" bpmnElement="BoundaryNonInterrupting_EndEvent5">
+        <di:waypoint x="380" y="638" />
+        <di:waypoint x="380" y="700" />
+        <di:waypoint x="512" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0ag9z37_di" bpmnElement="StartEvent1">
+        <dc:Bounds x="152" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="141" y="135" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1b1kjeb_di" bpmnElement="StartEvent2">
+        <dc:Bounds x="152" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="141" y="375" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qq2v3n_di" bpmnElement="StartEvent3">
+        <dc:Bounds x="152" y="562" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="141" y="605" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04894te_di" bpmnElement="MessageStartEvent">
+        <dc:Bounds x="152" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="127" y="275" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_11vxoqd_di" bpmnElement="ExclusiveGateway" isMarkerVisible="true">
+        <dc:Bounds x="305" y="85" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="285" y="55" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wmpjaw_di" bpmnElement="Task1">
+        <dc:Bounds x="300" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00nnhjd_di" bpmnElement="Task2">
+        <dc:Bounds x="300" y="540" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_152h44k_di" bpmnElement="ReceiveTask">
+        <dc:Bounds x="480" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fa80hk_di" bpmnElement="EndEvent2">
+        <dc:Bounds x="512" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="375" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16ms024_di" bpmnElement="EndEvent3">
+        <dc:Bounds x="512" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="495" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n8h1re_di" bpmnElement="EndEvent4">
+        <dc:Bounds x="512" y="562" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="605" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1c4et8x_di" bpmnElement="EndEvent5">
+        <dc:Bounds x="512" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="725" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0za9z9g_di" bpmnElement="MessageEvent">
+        <dc:Bounds x="692" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="674" y="135" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0v9l6u6_di" bpmnElement="EndEvent1">
+        <dc:Bounds x="872" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="863" y="135" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09b9c8r_di" bpmnElement="BoundaryInterrupting">
+        <dc:Bounds x="362" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1n6pad0_di" bpmnElement="BoundaryNonInterrupting">
+        <dc:Bounds x="362" y="602" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

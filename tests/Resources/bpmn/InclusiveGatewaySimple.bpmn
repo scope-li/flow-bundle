@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0xza0e0" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:process id="Process_1yfid7h" isExecutable="true">
+    <bpmn:startEvent id="StartEvent">
+      <bpmn:outgoing>StartEvent_InclusiveGatway1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="StartEvent_InclusiveGatway1" sourceRef="StartEvent" targetRef="InclusiveGatway1" />
+    <bpmn:task id="Task1" name="Task1">
+      <bpmn:incoming>InclusiveGatway1_Task1</bpmn:incoming>
+      <bpmn:outgoing>Task1_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task1" sourceRef="InclusiveGatway1" targetRef="Task1" />
+    <bpmn:task id="Task2" name="Task2">
+      <bpmn:incoming>InclusiveGatway1_Task2</bpmn:incoming>
+      <bpmn:outgoing>Task2_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task2" sourceRef="InclusiveGatway1" targetRef="Task2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">value &gt; 1</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Task1_InclusiveGatway2" sourceRef="Task1" targetRef="InclusiveGatway2" />
+    <bpmn:sequenceFlow id="Task2_InclusiveGatway2" sourceRef="Task2" targetRef="InclusiveGatway2" />
+    <bpmn:endEvent id="EndEvent">
+      <bpmn:incoming>InclusiveGatway2_EndEvent</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="InclusiveGatway2_EndEvent" sourceRef="InclusiveGatway2" targetRef="EndEvent" />
+    <bpmn:inclusiveGateway id="InclusiveGatway1" default="InclusiveGatway1_Task1">
+      <bpmn:incoming>StartEvent_InclusiveGatway1</bpmn:incoming>
+      <bpmn:outgoing>InclusiveGatway1_Task1</bpmn:outgoing>
+      <bpmn:outgoing>InclusiveGatway1_Task2</bpmn:outgoing>
+      <bpmn:outgoing>InclusiveGatway1_Task3</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:inclusiveGateway id="InclusiveGatway2">
+      <bpmn:incoming>Task1_InclusiveGatway2</bpmn:incoming>
+      <bpmn:incoming>Task2_InclusiveGatway2</bpmn:incoming>
+      <bpmn:incoming>Task3_InclusiveGatway2</bpmn:incoming>
+      <bpmn:outgoing>InclusiveGatway2_EndEvent</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:task id="Task3" name="Task3">
+      <bpmn:incoming>InclusiveGatway1_Task3</bpmn:incoming>
+      <bpmn:outgoing>Task3_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task3" sourceRef="InclusiveGatway1" targetRef="Task3">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">value &gt; 2</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Task3_InclusiveGatway2" sourceRef="Task3" targetRef="InclusiveGatway2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1yfid7h">
+      <bpmndi:BPMNEdge id="Flow_13ws0gg_di" bpmnElement="StartEvent_InclusiveGatway1">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="265" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18es9ho_di" bpmnElement="InclusiveGatway1_Task1">
+        <di:waypoint x="315" y="117" />
+        <di:waypoint x="370" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lwndu1_di" bpmnElement="InclusiveGatway1_Task2">
+        <di:waypoint x="290" y="142" />
+        <di:waypoint x="290" y="230" />
+        <di:waypoint x="370" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1594tp7_di" bpmnElement="Task1_InclusiveGatway2">
+        <di:waypoint x="470" y="117" />
+        <di:waypoint x="525" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ya9pca_di" bpmnElement="Task2_InclusiveGatway2">
+        <di:waypoint x="470" y="230" />
+        <di:waypoint x="550" y="230" />
+        <di:waypoint x="550" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kjjvh2_di" bpmnElement="InclusiveGatway2_EndEvent">
+        <di:waypoint x="575" y="117" />
+        <di:waypoint x="632" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h3s39u_di" bpmnElement="InclusiveGatway1_Task3">
+        <di:waypoint x="290" y="142" />
+        <di:waypoint x="290" y="340" />
+        <di:waypoint x="370" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0twgmtp_di" bpmnElement="Task3_InclusiveGatway2">
+        <di:waypoint x="470" y="340" />
+        <di:waypoint x="550" y="340" />
+        <di:waypoint x="550" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s8blw0_di" bpmnElement="Task1">
+        <dc:Bounds x="370" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nzjr1n_di" bpmnElement="Task2">
+        <dc:Bounds x="370" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1j2zxfu_di" bpmnElement="EndEvent">
+        <dc:Bounds x="632" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0m3flfv_di" bpmnElement="InclusiveGatway1">
+        <dc:Bounds x="265" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1fyln1z_di" bpmnElement="InclusiveGatway2">
+        <dc:Bounds x="525" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_060535s_di" bpmnElement="Task3">
+        <dc:Bounds x="370" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

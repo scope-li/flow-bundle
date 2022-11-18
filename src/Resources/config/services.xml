@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+  <services>
+    <!-- Connector -->
+    <service id="scopeli_flow.connector.runner" class="Scopeli\FlowBundle\Connector\ConnectorRunner">
+      <argument type="service" id="scopeli_flow.script.runner"/>
+      <argument type="tagged_iterator" tag="scopeli_flow.connector" index-by="key"/>
+    </service>
+
+    <!-- EventListener -->
+    <service id="scopeli_flow.event_listener.logger" class="Scopeli\FlowBundle\EventListener\LoggerListener">
+      <argument type="service" id="logger" />
+
+      <tag name="kernel.event_listener" event="scopeli_flow.flow_node.inactive" method="loggingFlowNodeEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.flow_node.ready" method="loggingFlowNodeEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.flow_node.active" method="loggingFlowNodeEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.flow_node.completing" method="loggingFlowNodeEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.flow_node.completed" method="loggingFlowNodeEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.flow_node.closed" method="loggingFlowNodeEvent" />
+
+      <tag name="kernel.event_listener" event="scopeli_flow.process_instance.started" method="loggingProcessInstanceEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.process_instance.ended" method="loggingProcessInstanceEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.process_instance.cancelled" method="loggingProcessInstanceEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.process_instance.error" method="loggingProcessInstanceEvent" />
+      <tag name="kernel.event_listener" event="scopeli_flow.process_instance.abnormal" method="loggingProcessInstanceEvent" />
+
+      <tag name="kernel.event_listener" event="scopeli_flow.operation.run" method="loggingOperationEvent" />
+    </service>
+    <service id="scopeli_flow.event_listener.doctrine" class="Scopeli\FlowBundle\EventListener\DoctrineListener">
+      <argument type="service" id="Scopeli\FlowBundle\Serializer\SerializerInterface" />
+
+      <tag name="doctrine.event_listener" event="prePersist"/>
+      <tag name="doctrine.event_listener" event="preUpdate"/>
+      <tag name="doctrine.event_listener" event="postLoad"/>
+    </service>
+    <service id="scopeli_flow.event_listener.logger" class="Scopeli\FlowBundle\EventListener\OperationListener">
+      <argument type="service" id="scopeli_flow.connector.runner" />
+      <tag name="kernel.event_listener" event="scopeli_flow.operation.run" method="operationRun" />
+    </service>
+
+    <!-- Process -->
+    <service id="scopeli_flow.process.process_instance_repository" class="Scopeli\FlowBundle\Process\ProcessInstanceRepository" />
+    <service id="scopeli_flow.process.process_definition_repository" class="Scopeli\FlowBundle\Process\ProcessDefinitionRepository" />
+    <service id="scopeli_flow.process.process_runner" class="Scopeli\FlowBundle\Process\ProcessRunner">
+      <argument type="service" id="Scopeli\FlowBundle\Process\ProcessInstanceRepositoryInterface"/>
+      <argument type="service" id="Scopeli\FlowBundle\Process\ProcessDefinitionRepositoryInterface"/>
+      <argument type="service" id="scopeli_flow.script.runner"/>
+      <argument type="service" id="event_dispatcher"/>
+    </service>
+    <service id="Scopeli\FlowBundle\Process\ProcessRunnerInterface" alias="scopeli_flow.process.process_runner"/>
+
+    <!-- Script -->
+    <service id="scopeli_flow.script.runner" class="Scopeli\FlowBundle\Script\ScriptRunner">
+      <argument type="tagged_iterator" tag="scopeli_flow.script" index-by="key"/>
+    </service>
+
+    <!-- Serializer -->
+    <service id="scopeli_flow.serializer.php_serializer" class="Scopeli\FlowBundle\Serializer\PhpSerializeSerializer" />
+    <service id="scopeli_flow.serializer.base64_php_serializer" class="Scopeli\FlowBundle\Serializer\Base64PhpSerializeSerializer" />
+
+  </services>
+</container>

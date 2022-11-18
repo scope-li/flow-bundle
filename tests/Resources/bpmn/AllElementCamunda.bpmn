@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:process id="Process1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent1">
+      <bpmn:outgoing>Flow_0o1in09</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0o1in09" sourceRef="StartEvent1" targetRef="ServiceTask1" />
+    <bpmn:serviceTask id="ServiceTask1" name="ServiceTask1">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="var8">
+              <camunda:map>
+                <camunda:entry key="key1">${boolean[0]}</camunda:entry>
+                <camunda:entry key="key2">${string[0]}</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="var7">
+              <camunda:list>
+                <camunda:value>${array['key1'][0]}</camunda:value>
+                <camunda:value>${array['key2'][1]}</camunda:value>
+              </camunda:list>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="var6">
+              <camunda:script scriptFormat="twig">{{ name ~ ' ' ~ string[0] }}</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="var5">${name}</camunda:inputParameter>
+            <camunda:outputParameter name="var4">
+              <camunda:map>
+                <camunda:entry key="key1">${boolean[1]}</camunda:entry>
+                <camunda:entry key="key2">${string[1]}</camunda:entry>
+              </camunda:map>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="var3">
+              <camunda:list>
+                <camunda:value>${array['key1'][0]}</camunda:value>
+                <camunda:value>${array['key2'][1]}</camunda:value>
+              </camunda:list>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="var2">
+              <camunda:script scriptFormat="twig">{{ name ~ ' ' ~ string[0] }}</camunda:script>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="var1">${integer[1]}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>Scopeli\FlowBundle\Resources\Connector\DummyConnector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="var8">
+            <camunda:map>
+              <camunda:entry key="key1">value1</camunda:entry>
+              <camunda:entry key="key2">value2</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="var7">
+            <camunda:list>
+              <camunda:value>value1</camunda:value>
+              <camunda:value>value2</camunda:value>
+            </camunda:list>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="var6">
+            <camunda:script scriptFormat="twig">value</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="var5">value</camunda:inputParameter>
+          <camunda:outputParameter name="var4">
+            <camunda:map>
+              <camunda:entry key="key1">value1</camunda:entry>
+              <camunda:entry key="key2">value2</camunda:entry>
+            </camunda:map>
+          </camunda:outputParameter>
+          <camunda:outputParameter name="var3">
+            <camunda:list>
+              <camunda:value>value1</camunda:value>
+              <camunda:value>value2</camunda:value>
+            </camunda:list>
+          </camunda:outputParameter>
+          <camunda:outputParameter name="var2">
+            <camunda:script scriptFormat="twig" resource="value" />
+          </camunda:outputParameter>
+          <camunda:outputParameter name="var1">value</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0o1in09</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l60uka</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1l60uka" sourceRef="ServiceTask1" targetRef="UserTask1" />
+    <bpmn:userTask id="UserTask1" name="UserTask1" camunda:formKey="form_key_1" camunda:assignee="ROLE_USER">
+      <bpmn:incoming>Flow_1l60uka</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o2t7sr</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0z73c27">
+      <bpmn:incoming>Flow_1o2t7sr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1o2t7sr" sourceRef="UserTask1" targetRef="Event_0z73c27" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process1">
+      <bpmndi:BPMNEdge id="Flow_1o2t7sr_di" bpmnElement="Flow_1o2t7sr">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l60uka_di" bpmnElement="Flow_1l60uka">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o1in09_di" bpmnElement="Flow_0o1in09">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cjavkp_di" bpmnElement="ServiceTask1">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14pr67s_di" bpmnElement="UserTask1">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0z73c27_di" bpmnElement="Event_0z73c27">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

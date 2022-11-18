@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0xza0e0" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <bpmn:process id="Process_1yfid7h" isExecutable="true">
+    <bpmn:startEvent id="StartEvent">
+      <bpmn:outgoing>StartEvent_InclusiveGatway1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="StartEvent_InclusiveGatway1" sourceRef="StartEvent" targetRef="InclusiveGatway1" />
+    <bpmn:task id="Task1" name="Task1">
+      <bpmn:incoming>InclusiveGatway1_Task1</bpmn:incoming>
+      <bpmn:outgoing>Task1_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task1" sourceRef="InclusiveGatway1" targetRef="Task1" />
+    <bpmn:task id="Task2" name="Task2">
+      <bpmn:incoming>InclusiveGatway1_Task2</bpmn:incoming>
+      <bpmn:outgoing>Task2_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task2" sourceRef="InclusiveGatway1" targetRef="Task2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">value &gt; 1</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Task1_InclusiveGatway2" sourceRef="Task1" targetRef="InclusiveGatway2" />
+    <bpmn:sequenceFlow id="Task2_InclusiveGatway2" sourceRef="Task2" targetRef="InclusiveGatway2" />
+    <bpmn:endEvent id="EndEvent">
+      <bpmn:incoming>InclusiveGatway2_EndEvent</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="InclusiveGatway2_EndEvent" sourceRef="InclusiveGatway2" targetRef="EndEvent" />
+    <bpmn:inclusiveGateway id="InclusiveGatway1" default="InclusiveGatway1_Task1">
+      <bpmn:incoming>StartEvent_InclusiveGatway1</bpmn:incoming>
+      <bpmn:outgoing>InclusiveGatway1_Task1</bpmn:outgoing>
+      <bpmn:outgoing>InclusiveGatway1_Task2</bpmn:outgoing>
+      <bpmn:outgoing>InclusiveGatway1_Task3a</bpmn:outgoing>
+      <bpmn:outgoing>InclusiveGatway1_Task4a</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:inclusiveGateway id="InclusiveGatway2">
+      <bpmn:incoming>Task1_InclusiveGatway2</bpmn:incoming>
+      <bpmn:incoming>Task2_InclusiveGatway2</bpmn:incoming>
+      <bpmn:incoming>Task3b_InclusiveGatway2</bpmn:incoming>
+      <bpmn:incoming>ExclusivGateway1_InclusiveGatway2</bpmn:incoming>
+      <bpmn:outgoing>InclusiveGatway2_EndEvent</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:task id="Task3a" name="Task3a">
+      <bpmn:incoming>InclusiveGatway1_Task3a</bpmn:incoming>
+      <bpmn:outgoing>Task3a_Task3b</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task3a" sourceRef="InclusiveGatway1" targetRef="Task3a">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">value &gt; 2</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="Task3b" name="Task3b">
+      <bpmn:incoming>Task3a_Task3b</bpmn:incoming>
+      <bpmn:outgoing>Task3b_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Task3a_Task3b" sourceRef="Task3a" targetRef="Task3b" />
+    <bpmn:task id="Task4a" name="Task4a">
+      <bpmn:incoming>InclusiveGatway1_Task4a</bpmn:incoming>
+      <bpmn:incoming>ExclusivGateway1_Task4a</bpmn:incoming>
+      <bpmn:outgoing>Task4a_Task4b</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="InclusiveGatway1_Task4a" sourceRef="InclusiveGatway1" targetRef="Task4a">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">value &gt; 3</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="Task4b" name="Task4b">
+      <bpmn:incoming>Task4a_Task4b</bpmn:incoming>
+      <bpmn:outgoing>Task4b_ExclusivGateway1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Task4a_Task4b" sourceRef="Task4a" targetRef="Task4b" />
+    <bpmn:exclusiveGateway id="ExclusivGateway1" default="ExclusivGateway1_InclusiveGatway2">
+      <bpmn:incoming>Task4b_ExclusivGateway1</bpmn:incoming>
+      <bpmn:outgoing>ExclusivGateway1_Task4a</bpmn:outgoing>
+      <bpmn:outgoing>ExclusivGateway1_InclusiveGatway2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Task4b_ExclusivGateway1" sourceRef="Task4b" targetRef="ExclusivGateway1" />
+    <bpmn:sequenceFlow id="ExclusivGateway1_Task4a" sourceRef="ExclusivGateway1" targetRef="Task4a">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">rerun === true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Task3b_InclusiveGatway2" sourceRef="Task3b" targetRef="InclusiveGatway2" />
+    <bpmn:sequenceFlow id="ExclusivGateway1_InclusiveGatway2" sourceRef="ExclusivGateway1" targetRef="InclusiveGatway2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1yfid7h">
+      <bpmndi:BPMNEdge id="Flow_1h3s39u_di" bpmnElement="InclusiveGatway1_Task3a">
+        <di:waypoint x="290" y="142" />
+        <di:waypoint x="290" y="340" />
+        <di:waypoint x="370" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ya9pca_di" bpmnElement="Task2_InclusiveGatway2">
+        <di:waypoint x="470" y="230" />
+        <di:waypoint x="720" y="230" />
+        <di:waypoint x="720" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1594tp7_di" bpmnElement="Task1_InclusiveGatway2">
+        <di:waypoint x="470" y="117" />
+        <di:waypoint x="695" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lwndu1_di" bpmnElement="InclusiveGatway1_Task2">
+        <di:waypoint x="290" y="142" />
+        <di:waypoint x="290" y="230" />
+        <di:waypoint x="370" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18es9ho_di" bpmnElement="InclusiveGatway1_Task1">
+        <di:waypoint x="315" y="117" />
+        <di:waypoint x="370" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13ws0gg_di" bpmnElement="StartEvent_InclusiveGatway1">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="265" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vi4rst_di" bpmnElement="Task3a_Task3b">
+        <di:waypoint x="470" y="340" />
+        <di:waypoint x="530" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dy9xxq_di" bpmnElement="InclusiveGatway1_Task4a">
+        <di:waypoint x="290" y="142" />
+        <di:waypoint x="290" y="450" />
+        <di:waypoint x="370" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0obe9dz_di" bpmnElement="Task4a_Task4b">
+        <di:waypoint x="470" y="450" />
+        <di:waypoint x="530" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p6cmtz_di" bpmnElement="Task4b_ExclusivGateway1">
+        <di:waypoint x="630" y="450" />
+        <di:waypoint x="695" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1knpn0a_di" bpmnElement="ExclusivGateway1_Task4a">
+        <di:waypoint x="720" y="475" />
+        <di:waypoint x="720" y="550" />
+        <di:waypoint x="420" y="550" />
+        <di:waypoint x="420" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kjjvh2_di" bpmnElement="InclusiveGatway2_EndEvent">
+        <di:waypoint x="745" y="117" />
+        <di:waypoint x="802" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h6i37n_di" bpmnElement="Task3b_InclusiveGatway2">
+        <di:waypoint x="630" y="340" />
+        <di:waypoint x="720" y="340" />
+        <di:waypoint x="720" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xms4kz_di" bpmnElement="ExclusivGateway1_InclusiveGatway2">
+        <di:waypoint x="720" y="425" />
+        <di:waypoint x="720" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s8blw0_di" bpmnElement="Task1">
+        <dc:Bounds x="370" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nzjr1n_di" bpmnElement="Task2">
+        <dc:Bounds x="370" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0m3flfv_di" bpmnElement="InclusiveGatway1">
+        <dc:Bounds x="265" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_060535s_di" bpmnElement="Task3a">
+        <dc:Bounds x="370" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qy82fl_di" bpmnElement="Task3b">
+        <dc:Bounds x="530" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qgpkhj_di" bpmnElement="Task4a">
+        <dc:Bounds x="370" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m63l38_di" bpmnElement="Task4b">
+        <dc:Bounds x="530" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0qajue4_di" bpmnElement="ExclusivGateway1" isMarkerVisible="true">
+        <dc:Bounds x="695" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1j2zxfu_di" bpmnElement="EndEvent">
+        <dc:Bounds x="802" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1fyln1z_di" bpmnElement="InclusiveGatway2">
+        <dc:Bounds x="695" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

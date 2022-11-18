@@ -1,0 +1,7 @@
+parameters:
+    checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false
+    excludePaths:
+        - src/DependencyInjection/Configuration.php
+        - src/Resources/skeleton/Class.tpl.php
+        - src/Resources/skeleton/Bpmn.tpl.php

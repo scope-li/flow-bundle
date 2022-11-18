@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn2:message id="Message_1" name="Message1" />
+  <bpmn2:interface id="Interface_1" name="Interface1">
+    <bpmn2:operation id="Operation_1" name="Operation1">
+      <bpmn2:inMessageRef>Message_1</bpmn2:inMessageRef>
+    </bpmn2:operation>
+  </bpmn2:interface>
+  <bpmn2:process id="Process_1" name="Process 1" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent" name="StartEvent">
+      <bpmn2:outgoing>StartEvent_ServiceTask</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="StartEvent_ServiceTask" sourceRef="StartEvent" targetRef="ServiceTask" />
+    <bpmn2:endEvent id="EndEvent" name="EndEvent">
+      <bpmn2:incoming>SendTask_EndEvent</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sendTask id="SendTask" name="SendTask" implementation="##unspecified" operationRef="Operation_1">
+      <bpmn2:incoming>ServiceTask_SendTask</bpmn2:incoming>
+      <bpmn2:outgoing>SendTask_EndEvent</bpmn2:outgoing>
+    </bpmn2:sendTask>
+    <bpmn2:serviceTask id="ServiceTask" name="ServiceTask" implementation="##unspecified" operationRef="Operation_1">
+      <bpmn2:incoming>StartEvent_ServiceTask</bpmn2:incoming>
+      <bpmn2:outgoing>ServiceTask_SendTask</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="ServiceTask_SendTask" sourceRef="ServiceTask" targetRef="SendTask" />
+    <bpmn2:sequenceFlow id="SendTask_EndEvent" sourceRef="SendTask" targetRef="EndEvent" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNEdge id="Flow_1a7duve_di" bpmnElement="SendTask_EndEvent">
+        <di:waypoint x="520" y="110" />
+        <di:waypoint x="592" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pd9lwv_di" bpmnElement="ServiceTask_SendTask">
+        <di:waypoint x="360" y="110" />
+        <di:waypoint x="420" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="StartEvent_ServiceTask" sourceElement="BPMNShape_StartEvent_1" targetElement="Activity_1nosyi8_di">
+        <di:waypoint x="208" y="110" />
+        <di:waypoint x="260" y="110" />
+        <bpmndi:BPMNLabel id="BPMNLabel_3" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent">
+        <dc:Bounds x="172" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds x="165" y="128" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vfup4g_di" bpmnElement="SendTask">
+        <dc:Bounds x="420" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1nosyi8_di" bpmnElement="ServiceTask">
+        <dc:Bounds x="260" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent">
+        <dc:Bounds x="592" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel id="BPMNLabel_4" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds x="586" y="128" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+      <dc:Font name="arial" size="9" />
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
