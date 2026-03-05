@@ -1,41 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Association extends Artifact
 {
-    public function getSourceRef() : AbstractElement
+    public function getSourceRef(): AbstractElement
     {
-        $value = $this->getAttribute('sourceRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('sourceRef'));
     }
 
-    public function hasSourceRef() : bool
+    public function hasSourceRef(): bool
     {
         return $this->hasAttribute('sourceRef');
     }
 
-    public function getTargetRef() : AbstractElement
+    public function getTargetRef(): AbstractElement
     {
-        $value = $this->getAttribute('targetRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('targetRef'));
     }
 
-    public function hasTargetRef() : bool
+    public function hasTargetRef(): bool
     {
         return $this->hasAttribute('targetRef');
     }
 
-    public function getAssociationDirection() : string
+    public function getAssociationDirection(): string
     {
-        $value = $this->getAttribute('associationDirection') ?? 'None';
-
-        return (string) $value;
+        return $this->getAttribute('associationDirection') ?? 'None';
     }
 
-    public function hasAssociationDirection() : bool
+    public function hasAssociationDirection(): bool
     {
         return $this->hasAttribute('associationDirection');
     }

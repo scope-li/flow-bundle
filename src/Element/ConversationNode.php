@@ -1,33 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 abstract class ConversationNode extends BaseElement
 {
     /** @return ElementList<AbstractElement> */
-    public function getParticipantRef() : ElementList
+    public function getParticipantRef(): ElementList
     {
         return new ElementList($this->getRefChilds('participantRef'));
     }
 
-    public function hasParticipantRef() : bool
+    public function hasParticipantRef(): bool
     {
         return $this->hasChild('participantRef');
     }
 
     /** @return ElementList<AbstractElement> */
-    public function getMessageFlowRef() : ElementList
+    public function getMessageFlowRef(): ElementList
     {
         return new ElementList($this->getRefChilds('messageFlowRef'));
     }
 
-    public function hasMessageFlowRef() : bool
+    public function hasMessageFlowRef(): bool
     {
         return $this->hasChild('messageFlowRef');
     }
 
     /** @return ElementList<CorrelationKey> */
-    public function getCorrelationKey() : ElementList
+    public function getCorrelationKey(): ElementList
     {
         /** @var ElementList<CorrelationKey> $elements */
         $elements = new ElementList($this->getChilds('correlationKey'));
@@ -35,12 +37,12 @@ abstract class ConversationNode extends BaseElement
         return $elements;
     }
 
-    public function hasCorrelationKey() : bool
+    public function hasCorrelationKey(): bool
     {
         return $this->hasChild('correlationKey');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -48,10 +50,10 @@ abstract class ConversationNode extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

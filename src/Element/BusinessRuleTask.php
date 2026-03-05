@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class BusinessRuleTask extends Task
 {
-    public function getImplementation() : string
+    public function getImplementation(): string
     {
-        $value = $this->getAttribute('implementation') ?? '##unspecified';
-
-        return (string) $value;
+        return $this->getAttribute('implementation') ?? '##unspecified';
     }
 
-    public function hasImplementation() : bool
+    public function hasImplementation(): bool
     {
         return $this->hasAttribute('implementation');
     }

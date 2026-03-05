@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class ConversationAssociation extends BaseElement
 {
-    public function getInnerConversationNodeRef() : AbstractElement
+    public function getInnerConversationNodeRef(): AbstractElement
     {
-        $value = $this->getAttribute('innerConversationNodeRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('innerConversationNodeRef'));
     }
 
-    public function hasInnerConversationNodeRef() : bool
+    public function hasInnerConversationNodeRef(): bool
     {
         return $this->hasAttribute('innerConversationNodeRef');
     }
 
-    public function getOuterConversationNodeRef() : AbstractElement
+    public function getOuterConversationNodeRef(): AbstractElement
     {
-        $value = $this->getAttribute('outerConversationNodeRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('outerConversationNodeRef'));
     }
 
-    public function hasOuterConversationNodeRef() : bool
+    public function hasOuterConversationNodeRef(): bool
     {
         return $this->hasAttribute('outerConversationNodeRef');
     }

@@ -1,14 +1,8 @@
 <?php
 
-namespace Scopeli\FlowBundle\Serializer;
+declare(strict_types=1);
 
-use DateTime;
-use DateTimeInterface;
-use PHPUnit\Framework\TestCase;
-use Scopeli\FlowBundle\Process\ProcessInstance;
-use Scopeli\FlowBundle\Process\ProcessInstanceInterface;
-use Scopeli\FlowBundle\Process\ProcessLog;
-use Scopeli\FlowBundle\Process\Token;
+namespace Scopeli\FlowBundle\Serializer;
 
 class PhpSerializeSerializerTest extends AbstractSerializerTest
 {

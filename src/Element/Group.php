@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Group extends Artifact
 {
-    public function getCategoryValueRef() : ?AbstractElement
+    public function getCategoryValueRef(): ?AbstractElement
     {
         $value = $this->getAttribute('categoryValueRef');
 
@@ -12,10 +14,10 @@ class Group extends Artifact
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasCategoryValueRef() : bool
+    public function hasCategoryValueRef(): bool
     {
         return $this->hasAttribute('categoryValueRef');
     }

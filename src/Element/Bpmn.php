@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
-use DOMElement;
 use DOMDocument;
+use DOMElement;
 use DOMNodeList;
 use DOMXPath;
 use Scopeli\FlowBundle\Exception\BpmnElementNotFoundByIdException;
@@ -107,7 +109,7 @@ class Bpmn extends DOMDocument
             $target = $outgoing->getTargetRef();
             assert($target instanceof FlowNode);
 
-            if (!in_array($target->getId(), $cache)) {
+            if (!in_array($target->getId(), $cache, true)) {
                 $found = $target->getId() === $target->getId() || $this->isLeadsTo($target, $target, $cache);
 
                 if ($found) {

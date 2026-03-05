@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Bpmn;
 
 use PHPUnit\Framework\TestCase;

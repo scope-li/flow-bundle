@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class MessageFlowAssociation extends BaseElement
 {
-    public function getInnerMessageFlowRef() : AbstractElement
+    public function getInnerMessageFlowRef(): AbstractElement
     {
-        $value = $this->getAttribute('innerMessageFlowRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('innerMessageFlowRef'));
     }
 
-    public function hasInnerMessageFlowRef() : bool
+    public function hasInnerMessageFlowRef(): bool
     {
         return $this->hasAttribute('innerMessageFlowRef');
     }
 
-    public function getOuterMessageFlowRef() : AbstractElement
+    public function getOuterMessageFlowRef(): AbstractElement
     {
-        $value = $this->getAttribute('outerMessageFlowRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('outerMessageFlowRef'));
     }
 
-    public function hasOuterMessageFlowRef() : bool
+    public function hasOuterMessageFlowRef(): bool
     {
         return $this->hasAttribute('outerMessageFlowRef');
     }

@@ -1,32 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 use DOMAttr;
 use DOMElement;
-use DOMNamedNodeMap;
 use Scopeli\FlowBundle\Exception\NotInstanceOfException;
 use Scopeli\FlowBundle\Exception\RuntimeException;
 
 class AbstractElement
 {
-    private DOMElement $element;
-
-    private Bpmn $bpmn;
-
     public static function createElement(DOMElement $element, Bpmn $bpmn): self
     {
-        $className = self::getFqnClassName($element->localName);
+        $className = self::getFqnClassName((string) $element->localName);
 
         if (null !== $className) {
             if (!is_a($className, AbstractElement::class, true)) {
                 throw new NotInstanceOfException($className, AbstractElement::class);
             }
 
-            /** @var AbstractElement $object */
-            $object = new $className($element, $bpmn);
-
-            return $object;
+            return new $className($element, $bpmn);
         }
 
         throw new RuntimeException(sprintf('No class found for "%s"', $element->localName));
@@ -47,11 +41,10 @@ class AbstractElement
         return null;
     }
 
-    public function __construct(DOMElement $element, Bpmn $bpmn)
-    {
-        $this->element = $element;
-        $this->bpmn = $bpmn;
-    }
+    public function __construct(
+        private readonly DOMElement $element,
+        private readonly Bpmn $bpmn,
+    ) {}
 
     public function getElement(): DOMElement
     {
@@ -79,12 +72,10 @@ class AbstractElement
 
     public function getAttribute(string $name): ?string
     {
-        if ($this->element->attributes instanceof DOMNamedNodeMap) {
-            /** @var DOMAttr $attribute */
-            foreach ($this->element->attributes as $attribute) {
-                if ($attribute->localName === $name) {
-                    return $attribute->nodeValue;
-                }
+        /** @var DOMAttr $attribute */
+        foreach ($this->element->attributes as $attribute) {
+            if ($attribute->localName === $name) {
+                return $attribute->nodeValue;
             }
         }
 
@@ -128,7 +119,7 @@ class AbstractElement
         $buffer = [];
 
         foreach ($this->getElementsByTagName($name) as $element) {
-            $buffer[] = $this->getBpmn()->getById($element->nodeValue);
+            $buffer[] = $this->getBpmn()->getById((string) $element->nodeValue);
         }
 
         return $buffer;

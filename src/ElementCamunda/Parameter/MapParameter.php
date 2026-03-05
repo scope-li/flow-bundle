@@ -1,19 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\ElementCamunda\Parameter;
 
 class MapParameter extends ParameterDefinition
 {
-    /** @var EntryParameter[] */
-    private array $entries = [];
-
     /**
      * @param EntryParameter[] $entries
      */
-    public function __construct(array $entries)
-    {
-        $this->entries = $entries;
-    }
+    public function __construct(private readonly array $entries) {}
 
     /**
      * @return EntryParameter[]

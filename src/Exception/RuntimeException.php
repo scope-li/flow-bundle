@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Exception;
 
-class RuntimeException extends \RuntimeException
-{
-}
+class RuntimeException extends \RuntimeException {}

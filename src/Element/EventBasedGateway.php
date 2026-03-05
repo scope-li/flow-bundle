@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class EventBasedGateway extends Gateway
 {
-    public function getInstantiate() : bool
+    public function getInstantiate(): bool
     {
-        $value = $this->getAttribute('instantiate') ?? 'false';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('instantiate') ?? 'false');
     }
 
-    public function hasInstantiate() : bool
+    public function hasInstantiate(): bool
     {
         return $this->hasAttribute('instantiate');
     }
 
-    public function getEventGatewayType() : string
+    public function getEventGatewayType(): string
     {
-        $value = $this->getAttribute('eventGatewayType') ?? 'Exclusive';
-
-        return (string) $value;
+        return $this->getAttribute('eventGatewayType') ?? 'Exclusive';
     }
 
-    public function hasEventGatewayType() : bool
+    public function hasEventGatewayType(): bool
     {
         return $this->hasAttribute('eventGatewayType');
     }

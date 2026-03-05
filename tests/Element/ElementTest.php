@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Scopeli\FlowBundle\ElementCamunda\Connector;
 use Scopeli\FlowBundle\ElementCamunda\InputOutput;
 use Scopeli\FlowBundle\ProcessDefinitionRepositoryTrait;
@@ -10,14 +13,12 @@ class ElementTest extends ElementTestCase
 {
     use ProcessDefinitionRepositoryTrait;
 
-    const TYPE_NULL = 'null';
-    const TYPE_LIST = 'list';
-    const TYPE_CLASS = 'class';
-    const TYPE_STRING = 'string';
+    public const TYPE_NULL = 'null';
+    public const TYPE_LIST = 'list';
+    public const TYPE_CLASS = 'class';
+    public const TYPE_STRING = 'string';
 
-    /**
-     * @dataProvider dataGet
-     */
+    #[DataProvider('dataGet')]
     public function testGet(string $method, string $elementId, string $type, ?string $expected = null): void
     {
         $element = $this->bpmn->getById($elementId);
@@ -37,7 +38,7 @@ class ElementTest extends ElementTestCase
         }
     }
 
-    public function dataGet(): iterable
+    public static function dataGet(): iterable
     {
         return [
             // EndEvent
@@ -63,16 +64,14 @@ class ElementTest extends ElementTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataHas
-     */
+    #[DataProvider('dataHas')]
     public function testHas(string $method, string $elementId, bool $expected): void
     {
         $element = $this->bpmn->getById($elementId);
         $this->assertSame($expected, $element->$method());
     }
 
-    public function dataHas(): iterable
+    public static function dataHas(): iterable
     {
         return [
             // EndEvent

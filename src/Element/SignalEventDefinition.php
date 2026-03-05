@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class SignalEventDefinition extends EventDefinition
 {
-    public function getSignalRef() : ?AbstractElement
+    public function getSignalRef(): ?AbstractElement
     {
         $value = $this->getAttribute('signalRef');
 
@@ -12,10 +14,10 @@ class SignalEventDefinition extends EventDefinition
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasSignalRef() : bool
+    public function hasSignalRef(): bool
     {
         return $this->hasAttribute('signalRef');
     }

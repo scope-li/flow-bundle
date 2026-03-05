@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class ErrorEventDefinition extends EventDefinition
 {
-    public function getErrorRef() : ?AbstractElement
+    public function getErrorRef(): ?AbstractElement
     {
         $value = $this->getAttribute('errorRef');
 
@@ -12,10 +14,10 @@ class ErrorEventDefinition extends EventDefinition
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasErrorRef() : bool
+    public function hasErrorRef(): bool
     {
         return $this->hasAttribute('errorRef');
     }

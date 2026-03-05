@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class BoundaryEvent extends CatchEvent
 {
-    public function getCancelActivity() : bool
+    public function getCancelActivity(): bool
     {
-        $value = $this->getAttribute('cancelActivity') ?? 'true';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('cancelActivity') ?? 'true');
     }
 
-    public function hasCancelActivity() : bool
+    public function hasCancelActivity(): bool
     {
         return $this->hasAttribute('cancelActivity');
     }
 
-    public function getAttachedToRef() : AbstractElement
+    public function getAttachedToRef(): AbstractElement
     {
-        $value = $this->getAttribute('attachedToRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('attachedToRef'));
     }
 
-    public function hasAttachedToRef() : bool
+    public function hasAttachedToRef(): bool
     {
         return $this->hasAttribute('attachedToRef');
     }

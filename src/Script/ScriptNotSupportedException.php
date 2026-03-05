@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Script;
 
 use Scopeli\FlowBundle\Exception\RuntimeException;

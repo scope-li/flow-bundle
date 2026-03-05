@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class DataObjectReference extends FlowElement
 {
-    public function getDataState() : ?DataState
+    public function getDataState(): ?DataState
     {
         $child = $this->getChild('dataState');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new DataState($child, $this->getBpmn());
     }
 
-    public function hasDataState() : bool
+    public function hasDataState(): bool
     {
         return $this->hasChild('dataState');
     }
 
-    public function getItemSubjectRef() : ?AbstractElement
+    public function getItemSubjectRef(): ?AbstractElement
     {
         $value = $this->getAttribute('itemSubjectRef');
 
@@ -28,15 +32,15 @@ class DataObjectReference extends FlowElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasItemSubjectRef() : bool
+    public function hasItemSubjectRef(): bool
     {
         return $this->hasAttribute('itemSubjectRef');
     }
 
-    public function getDataObjectRef() : ?AbstractElement
+    public function getDataObjectRef(): ?AbstractElement
     {
         $value = $this->getAttribute('dataObjectRef');
 
@@ -44,10 +48,10 @@ class DataObjectReference extends FlowElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasDataObjectRef() : bool
+    public function hasDataObjectRef(): bool
     {
         return $this->hasAttribute('dataObjectRef');
     }

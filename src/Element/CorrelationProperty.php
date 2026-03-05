@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class CorrelationProperty extends RootElement
 {
     /** @return ElementList<CorrelationPropertyRetrievalExpression> */
-    public function getCorrelationPropertyRetrievalExpression() : ElementList
+    public function getCorrelationPropertyRetrievalExpression(): ElementList
     {
         /** @var ElementList<CorrelationPropertyRetrievalExpression> $elements */
         $elements = new ElementList($this->getChilds('correlationPropertyRetrievalExpression'));
@@ -13,12 +15,12 @@ class CorrelationProperty extends RootElement
         return $elements;
     }
 
-    public function hasCorrelationPropertyRetrievalExpression() : bool
+    public function hasCorrelationPropertyRetrievalExpression(): bool
     {
         return $this->hasChild('correlationPropertyRetrievalExpression');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -26,15 +28,15 @@ class CorrelationProperty extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getType() : ?AbstractElement
+    public function getType(): ?AbstractElement
     {
         $value = $this->getAttribute('type');
 
@@ -42,10 +44,10 @@ class CorrelationProperty extends RootElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasType() : bool
+    public function hasType(): bool
     {
         return $this->hasAttribute('type');
     }

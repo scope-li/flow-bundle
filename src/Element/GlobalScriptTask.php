@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class GlobalScriptTask extends GlobalTask
 {
-    public function getScript() : ?string
+    public function getScript(): ?string
     {
         $child = $this->getChild('script');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return $child->nodeValue;
     }
 
-    public function hasScript() : bool
+    public function hasScript(): bool
     {
         return $this->hasChild('script');
     }
 
-    public function getScriptLanguage() : ?string
+    public function getScriptLanguage(): ?string
     {
         $value = $this->getAttribute('scriptLanguage');
 
@@ -28,10 +32,10 @@ class GlobalScriptTask extends GlobalTask
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasScriptLanguage() : bool
+    public function hasScriptLanguage(): bool
     {
         return $this->hasAttribute('scriptLanguage');
     }

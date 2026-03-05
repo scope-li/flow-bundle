@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
-class Auditing extends BaseElement
-{
-}
+class Auditing extends BaseElement {}

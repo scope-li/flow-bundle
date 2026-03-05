@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class SubConversation extends ConversationNode
 {
     /** @return ElementList<CallConversation> */
-    public function getCallConversation() : ElementList
+    public function getCallConversation(): ElementList
     {
         /** @var ElementList<CallConversation> $elements */
         $elements = new ElementList($this->getChilds('callConversation'));
@@ -13,13 +15,13 @@ class SubConversation extends ConversationNode
         return $elements;
     }
 
-    public function hasCallConversation() : bool
+    public function hasCallConversation(): bool
     {
         return $this->hasChild('callConversation');
     }
 
     /** @return ElementList<Conversation> */
-    public function getConversation() : ElementList
+    public function getConversation(): ElementList
     {
         /** @var ElementList<Conversation> $elements */
         $elements = new ElementList($this->getChilds('conversation'));
@@ -27,13 +29,13 @@ class SubConversation extends ConversationNode
         return $elements;
     }
 
-    public function hasConversation() : bool
+    public function hasConversation(): bool
     {
         return $this->hasChild('conversation');
     }
 
     /** @return ElementList<SubConversation> */
-    public function getSubConversation() : ElementList
+    public function getSubConversation(): ElementList
     {
         /** @var ElementList<SubConversation> $elements */
         $elements = new ElementList($this->getChilds('subConversation'));
@@ -41,7 +43,7 @@ class SubConversation extends ConversationNode
         return $elements;
     }
 
-    public function hasSubConversation() : bool
+    public function hasSubConversation(): bool
     {
         return $this->hasChild('subConversation');
     }

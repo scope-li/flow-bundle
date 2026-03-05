@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class CategoryValue extends BaseElement
 {
-    public function getValue() : ?string
+    public function getValue(): ?string
     {
         $value = $this->getAttribute('value');
 
@@ -12,10 +14,10 @@ class CategoryValue extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasValue() : bool
+    public function hasValue(): bool
     {
         return $this->hasAttribute('value');
     }

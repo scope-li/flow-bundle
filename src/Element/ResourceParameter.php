@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class ResourceParameter extends BaseElement
 {
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -12,15 +14,15 @@ class ResourceParameter extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getType() : ?AbstractElement
+    public function getType(): ?AbstractElement
     {
         $value = $this->getAttribute('type');
 
@@ -28,15 +30,15 @@ class ResourceParameter extends BaseElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasType() : bool
+    public function hasType(): bool
     {
         return $this->hasAttribute('type');
     }
 
-    public function getIsRequired() : ?bool
+    public function getIsRequired(): ?bool
     {
         $value = $this->getAttribute('isRequired');
 
@@ -47,7 +49,7 @@ class ResourceParameter extends BaseElement
         return 'true' === $value;
     }
 
-    public function hasIsRequired() : bool
+    public function hasIsRequired(): bool
     {
         return $this->hasAttribute('isRequired');
     }

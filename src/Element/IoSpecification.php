@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class IoSpecification extends BaseElement
 {
     /** @return ElementList<DataInput> */
-    public function getDataInput() : ElementList
+    public function getDataInput(): ElementList
     {
         /** @var ElementList<DataInput> $elements */
         $elements = new ElementList($this->getChilds('dataInput'));
@@ -13,13 +15,13 @@ class IoSpecification extends BaseElement
         return $elements;
     }
 
-    public function hasDataInput() : bool
+    public function hasDataInput(): bool
     {
         return $this->hasChild('dataInput');
     }
 
     /** @return ElementList<DataOutput> */
-    public function getDataOutput() : ElementList
+    public function getDataOutput(): ElementList
     {
         /** @var ElementList<DataOutput> $elements */
         $elements = new ElementList($this->getChilds('dataOutput'));
@@ -27,13 +29,13 @@ class IoSpecification extends BaseElement
         return $elements;
     }
 
-    public function hasDataOutput() : bool
+    public function hasDataOutput(): bool
     {
         return $this->hasChild('dataOutput');
     }
 
     /** @return ElementList<InputSet> */
-    public function getInputSet() : ElementList
+    public function getInputSet(): ElementList
     {
         /** @var ElementList<InputSet> $elements */
         $elements = new ElementList($this->getChilds('inputSet'));
@@ -41,13 +43,13 @@ class IoSpecification extends BaseElement
         return $elements;
     }
 
-    public function hasInputSet() : bool
+    public function hasInputSet(): bool
     {
         return $this->hasChild('inputSet');
     }
 
     /** @return ElementList<OutputSet> */
-    public function getOutputSet() : ElementList
+    public function getOutputSet(): ElementList
     {
         /** @var ElementList<OutputSet> $elements */
         $elements = new ElementList($this->getChilds('outputSet'));
@@ -55,7 +57,7 @@ class IoSpecification extends BaseElement
         return $elements;
     }
 
-    public function hasOutputSet() : bool
+    public function hasOutputSet(): bool
     {
         return $this->hasChild('outputSet');
     }

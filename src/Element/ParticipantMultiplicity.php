@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class ParticipantMultiplicity extends BaseElement
 {
-    public function getMinimum() : int
+    public function getMinimum(): int
     {
-        $value = $this->getAttribute('minimum') ?? '0';
-
-        return (int) $value;
+        return (int) ($this->getAttribute('minimum') ?? '0');
     }
 
-    public function hasMinimum() : bool
+    public function hasMinimum(): bool
     {
         return $this->hasAttribute('minimum');
     }
 
-    public function getMaximum() : int
+    public function getMaximum(): int
     {
-        $value = $this->getAttribute('maximum') ?? '1';
-
-        return (int) $value;
+        return (int) ($this->getAttribute('maximum') ?? '1');
     }
 
-    public function hasMaximum() : bool
+    public function hasMaximum(): bool
     {
         return $this->hasAttribute('maximum');
     }

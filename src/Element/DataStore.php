@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class DataStore extends RootElement
 {
-    public function getDataState() : ?DataState
+    public function getDataState(): ?DataState
     {
         $child = $this->getChild('dataState');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new DataState($child, $this->getBpmn());
     }
 
-    public function hasDataState() : bool
+    public function hasDataState(): bool
     {
         return $this->hasChild('dataState');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -28,15 +32,15 @@ class DataStore extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getCapacity() : ?int
+    public function getCapacity(): ?int
     {
         $value = $this->getAttribute('capacity');
 
@@ -47,24 +51,22 @@ class DataStore extends RootElement
         return (int) $value;
     }
 
-    public function hasCapacity() : bool
+    public function hasCapacity(): bool
     {
         return $this->hasAttribute('capacity');
     }
 
-    public function getIsUnlimited() : bool
+    public function getIsUnlimited(): bool
     {
-        $value = $this->getAttribute('isUnlimited') ?? 'true';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('isUnlimited') ?? 'true');
     }
 
-    public function hasIsUnlimited() : bool
+    public function hasIsUnlimited(): bool
     {
         return $this->hasAttribute('isUnlimited');
     }
 
-    public function getItemSubjectRef() : ?AbstractElement
+    public function getItemSubjectRef(): ?AbstractElement
     {
         $value = $this->getAttribute('itemSubjectRef');
 
@@ -72,10 +74,10 @@ class DataStore extends RootElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasItemSubjectRef() : bool
+    public function hasItemSubjectRef(): bool
     {
         return $this->hasAttribute('itemSubjectRef');
     }

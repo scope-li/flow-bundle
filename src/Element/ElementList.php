@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 use ArrayIterator;
@@ -14,20 +16,23 @@ use Scopeli\FlowBundle\Exception\WrongTypeException;
 class ElementList implements IteratorAggregate, Countable
 {
     /** @var TClass[] */
-    private array $elements = [];
+    private readonly array $elements;
 
     /**
      * @param TClass[]|array<TClass> $elements
      */
-    public function __construct($elements)
+    public function __construct(array $elements)
     {
+        $validated = [];
         foreach ($elements as $element) {
             if (!$element instanceof AbstractElement) {
                 throw new WrongTypeException(AbstractElement::class);
             }
 
-            $this->elements[] = $element;
+            $validated[] = $element;
         }
+
+        $this->elements = $validated;
     }
 
     public function count(): int

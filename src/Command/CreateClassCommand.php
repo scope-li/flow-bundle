@@ -1,33 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Command;
 
 use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use DOMXPath;
+use Scopeli\FlowBundle\ElementCamunda\Connector;
+use Scopeli\FlowBundle\ElementCamunda\InputOutput;
 use Scopeli\FlowBundle\Exception\RuntimeException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'create:class', description: 'Generate Element classes from BPMN XSD')]
 class CreateClassCommand extends Command
 {
-    /** @var string */
-    private const XSD = 'src/Resources/schema/Semantic.xsd';
+    private const string XSD = 'src/Resources/schema/Semantic.xsd';
 
-    /** @var string */
-    private const OUTPUT = 'src/Element';
+    private const string OUTPUT = 'src/Element';
 
-    /** @var string */
-    private const NAMESPACE = 'Scopeli\FlowBundle\Element';
+    private const string NAMESPACE = 'Scopeli\FlowBundle\Element';
 
-    /** @var array */
-    private const CAMUNDA_EXTENSION = [
+    /** @var array<string, array{useClasses: string[], functions: array<int, array<string, mixed>>}> */
+    private const array CAMUNDA_EXTENSION = [
         'extensionElements' => [
             'useClasses' => [
-                'Scopeli\FlowBundle\ElementCamunda\Connector',
-                'Scopeli\FlowBundle\ElementCamunda\InputOutput',
+                Connector::class,
+                InputOutput::class,
             ],
             'functions' => [
                 [
@@ -104,15 +107,14 @@ class CreateClassCommand extends Command
         ],
     ];
 
-    protected static $defaultName = 'create:class';
+    private readonly DOMDocument $xsd;
 
-    private DOMDocument $xsd;
-
+    /** @var array<string, array<string, mixed>> */
     private array $classes = [];
 
-    public function __construct(string $name = null)
+    public function __construct()
     {
-        parent::__construct($name);
+        parent::__construct();
 
         $this->xsd = new DOMDocument();
         $this->xsd->load($this->getXsdPath());
@@ -162,7 +164,7 @@ class CreateClassCommand extends Command
                     if ($substitutionGroup->length === 0) {
                         $name = $complexTypeElement->getAttribute('ref');
                         $type = ucfirst($name);
-                        if (in_array($name, ['script', 'text'])) {
+                        if (in_array($name, ['script', 'text'], true)) {
                             $type = 'string';
                         }
 
@@ -231,18 +233,25 @@ class CreateClassCommand extends Command
             ];
 
             if (isset(self::CAMUNDA_EXTENSION[$elementName])) {
+                /** @var string[] $useClasses */
+                $useClasses = $this->classes[$elementName]['useClasses'];
                 $this->classes[$elementName]['useClasses'] = array_merge(
-                    $this->classes[$elementName]['useClasses'],
+                    $useClasses,
                     self::CAMUNDA_EXTENSION[$elementName]['useClasses']
                 );
+                /** @var array<int, array<string, mixed>> $functions */
+                $functions = $this->classes[$elementName]['functions'];
                 $this->classes[$elementName]['functions'] = array_merge(
-                    $this->classes[$elementName]['functions'],
+                    $functions,
                     self::CAMUNDA_EXTENSION[$elementName]['functions']
                 );
             }
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getReturnType(DOMElement $element, ?string $type = null): array
     {
         $returnType = [
@@ -255,33 +264,22 @@ class CreateClassCommand extends Command
 
         if (null === $type) {
             $type = $element->getAttribute('type');
-            switch (true) {
-                case is_array($this->isSimpleType($type)):
-                    $returnType['type'] = 'string';
-                    $returnType['simpleType'] = $this->isSimpleType($type);
-                    break;
-                case 'xsd:ID' === $type:
-                case 'xsd:string' === $type:
-                case 'xsd:anyURI' === $type:
-                    $returnType['type'] = 'string';
-                    break;
-                case 'xsd:boolean' === $type:
-                    $returnType['type'] = 'bool';
-                    break;
-                case 'xsd:integer' === $type:
-                case 'xsd:int' === $type:
-                    $returnType['type'] = 'int';
-                    break;
-                case 'xsd:IDREF' === $type:
-                case 'xsd:QName' === $type:
-                    $returnType['type'] = 'AbstractElement';
-                    $returnType['ref'] = true;
-                    break;
-                case substr($type, 0, 4) !== 'xsd' && substr($type, 0, 1) === 't':
-                    $returnType['type'] = substr($type, 1);
-                    break;
-                default:
-                    throw new RuntimeException('Not handled case.');
+            $returnType['type'] = match (true) {
+                is_array($this->isSimpleType($type)) => 'string',
+                in_array($type, ['xsd:ID', 'xsd:string', 'xsd:anyURI'], true) => 'string',
+                $type === 'xsd:boolean' => 'bool',
+                in_array($type, ['xsd:integer', 'xsd:int'], true) => 'int',
+                in_array($type, ['xsd:IDREF', 'xsd:QName'], true) => 'AbstractElement',
+                str_starts_with($type, 't') && !str_starts_with($type, 'xsd') => substr($type, 1),
+                default => throw new RuntimeException('Not handled case.'),
+            };
+
+            if (is_array($this->isSimpleType($type))) {
+                $returnType['simpleType'] = $this->isSimpleType($type);
+            }
+
+            if (in_array($type, ['xsd:IDREF', 'xsd:QName'], true)) {
+                $returnType['ref'] = true;
             }
         }
 
@@ -289,9 +287,9 @@ class CreateClassCommand extends Command
             $minOccurs = $element->getAttribute('minOccurs');
             $maxOccurs = $element->getAttribute('maxOccurs');
 
-            if (!in_array($maxOccurs, ['', '1'])) {
+            if (!in_array($maxOccurs, ['', '1'], true)) {
                 $returnType['list'] = true;
-            } elseif ('0' === $minOccurs && in_array($maxOccurs, ['', '1'])) {
+            } elseif ('0' === $minOccurs && in_array($maxOccurs, ['', '1'], true)) {
                 $returnType['nullable'] = true;
             }
         } else {
@@ -329,7 +327,7 @@ class CreateClassCommand extends Command
 
     private function getRootFolder(): string
     {
-        return (string) realpath(sprintf('%s/../../', dirname(__FILE__)));
+        return (string) realpath(sprintf('%s/../../', __DIR__));
     }
 
     private function cleanup(): void
@@ -338,19 +336,19 @@ class CreateClassCommand extends Command
         assert(is_array($files));
 
         foreach ($files as $file) {
-            if (!in_array(basename($file), ['AbstractElement.php', 'ElementList.php', 'Bpmn.php'])) {
+            if (!in_array(basename($file), ['AbstractElement.php', 'ElementList.php', 'Bpmn.php'], true)) {
                 unlink($file);
             }
         }
     }
 
     /**
-     * @return string[]
+     * @return string[]|null
      */
     private function isSimpleType(string $type): ?array
     {
         $simpleType = $this->query(sprintf('/xsd:schema/xsd:simpleType[@name="%s"]', $type))->item(0);
-        if (!$simpleType instanceof \DOMElement) {
+        if (!$simpleType instanceof DOMElement) {
             return null;
         }
 
@@ -369,7 +367,7 @@ class CreateClassCommand extends Command
         $classFile = sprintf('%s/Bpmn.php', $this->getOutputFolder());
         $classContent = $this->parseClassSkeleton($classSkeletonPath, [
             'namespace' => self::NAMESPACE,
-            'classes' => $this->classes
+            'classes' => $this->classes,
         ]);
         file_put_contents($classFile, $classContent);
     }
@@ -378,6 +376,7 @@ class CreateClassCommand extends Command
     {
         $classSkeletonPath = sprintf('%s/src/Resources/skeleton/Class.tpl.php', $this->getRootFolder());
         foreach ($this->classes as $config) {
+            assert(is_string($config['className']));
             $classFile = sprintf('%s/%s.php', $this->getOutputFolder(), $config['className']);
             $config['namespace'] = self::NAMESPACE;
             $classContent = $this->parseClassSkeleton($classSkeletonPath, $config);
@@ -385,6 +384,9 @@ class CreateClassCommand extends Command
         }
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function parseClassSkeleton(string $skeletonPath, array $context): string
     {
         ob_start();

@@ -1,91 +1,95 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class MultiInstanceLoopCharacteristics extends LoopCharacteristics
 {
-    public function getLoopCardinality() : ?Expression
+    public function getLoopCardinality(): ?Expression
     {
         $child = $this->getChild('loopCardinality');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new Expression($child, $this->getBpmn());
     }
 
-    public function hasLoopCardinality() : bool
+    public function hasLoopCardinality(): bool
     {
         return $this->hasChild('loopCardinality');
     }
 
-    public function getLoopDataInputRef() : ?AbstractElement
+    public function getLoopDataInputRef(): ?AbstractElement
     {
         $child = $this->getChild('loopDataInputRef');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return self::createElement($child, $this->getBpmn());
     }
 
-    public function hasLoopDataInputRef() : bool
+    public function hasLoopDataInputRef(): bool
     {
         return $this->hasChild('loopDataInputRef');
     }
 
-    public function getLoopDataOutputRef() : ?AbstractElement
+    public function getLoopDataOutputRef(): ?AbstractElement
     {
         $child = $this->getChild('loopDataOutputRef');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return self::createElement($child, $this->getBpmn());
     }
 
-    public function hasLoopDataOutputRef() : bool
+    public function hasLoopDataOutputRef(): bool
     {
         return $this->hasChild('loopDataOutputRef');
     }
 
-    public function getInputDataItem() : ?DataInput
+    public function getInputDataItem(): ?DataInput
     {
         $child = $this->getChild('inputDataItem');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new DataInput($child, $this->getBpmn());
     }
 
-    public function hasInputDataItem() : bool
+    public function hasInputDataItem(): bool
     {
         return $this->hasChild('inputDataItem');
     }
 
-    public function getOutputDataItem() : ?DataOutput
+    public function getOutputDataItem(): ?DataOutput
     {
         $child = $this->getChild('outputDataItem');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new DataOutput($child, $this->getBpmn());
     }
 
-    public function hasOutputDataItem() : bool
+    public function hasOutputDataItem(): bool
     {
         return $this->hasChild('outputDataItem');
     }
 
     /** @return ElementList<ComplexBehaviorDefinition> */
-    public function getComplexBehaviorDefinition() : ElementList
+    public function getComplexBehaviorDefinition(): ElementList
     {
         /** @var ElementList<ComplexBehaviorDefinition> $elements */
         $elements = new ElementList($this->getChilds('complexBehaviorDefinition'));
@@ -93,52 +97,48 @@ class MultiInstanceLoopCharacteristics extends LoopCharacteristics
         return $elements;
     }
 
-    public function hasComplexBehaviorDefinition() : bool
+    public function hasComplexBehaviorDefinition(): bool
     {
         return $this->hasChild('complexBehaviorDefinition');
     }
 
-    public function getCompletionCondition() : ?Expression
+    public function getCompletionCondition(): ?Expression
     {
         $child = $this->getChild('completionCondition');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new Expression($child, $this->getBpmn());
     }
 
-    public function hasCompletionCondition() : bool
+    public function hasCompletionCondition(): bool
     {
         return $this->hasChild('completionCondition');
     }
 
-    public function getIsSequential() : bool
+    public function getIsSequential(): bool
     {
-        $value = $this->getAttribute('isSequential') ?? 'false';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('isSequential') ?? 'false');
     }
 
-    public function hasIsSequential() : bool
+    public function hasIsSequential(): bool
     {
         return $this->hasAttribute('isSequential');
     }
 
-    public function getBehavior() : string
+    public function getBehavior(): string
     {
-        $value = $this->getAttribute('behavior') ?? 'All';
-
-        return (string) $value;
+        return $this->getAttribute('behavior') ?? 'All';
     }
 
-    public function hasBehavior() : bool
+    public function hasBehavior(): bool
     {
         return $this->hasAttribute('behavior');
     }
 
-    public function getOneBehaviorEventRef() : ?AbstractElement
+    public function getOneBehaviorEventRef(): ?AbstractElement
     {
         $value = $this->getAttribute('oneBehaviorEventRef');
 
@@ -146,15 +146,15 @@ class MultiInstanceLoopCharacteristics extends LoopCharacteristics
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasOneBehaviorEventRef() : bool
+    public function hasOneBehaviorEventRef(): bool
     {
         return $this->hasAttribute('oneBehaviorEventRef');
     }
 
-    public function getNoneBehaviorEventRef() : ?AbstractElement
+    public function getNoneBehaviorEventRef(): ?AbstractElement
     {
         $value = $this->getAttribute('noneBehaviorEventRef');
 
@@ -162,10 +162,10 @@ class MultiInstanceLoopCharacteristics extends LoopCharacteristics
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasNoneBehaviorEventRef() : bool
+    public function hasNoneBehaviorEventRef(): bool
     {
         return $this->hasAttribute('noneBehaviorEventRef');
     }

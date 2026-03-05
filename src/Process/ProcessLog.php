@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Process;
 
 use DateTime;
@@ -7,20 +9,13 @@ use DateTimeInterface;
 
 class ProcessLog implements ProcessLogInterface
 {
-    private string $id;
-
-    /** @var mixed[] */
-    private array $processData = [];
-
     private DateTimeInterface $date;
 
     /**
      * @param mixed[] $processData
      */
-    public function __construct(string $id, array $processData)
+    public function __construct(private string $id, private array $processData)
     {
-        $this->id = $id;
-        $this->processData = $processData;
         $this->date = new DateTime();
     }
 

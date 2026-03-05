@@ -1,38 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class AdHocSubProcess extends SubProcess
 {
-    public function getCompletionCondition() : ?Expression
+    public function getCompletionCondition(): ?Expression
     {
         $child = $this->getChild('completionCondition');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new Expression($child, $this->getBpmn());
     }
 
-    public function hasCompletionCondition() : bool
+    public function hasCompletionCondition(): bool
     {
         return $this->hasChild('completionCondition');
     }
 
-    public function getCancelRemainingInstances() : bool
+    public function getCancelRemainingInstances(): bool
     {
-        $value = $this->getAttribute('cancelRemainingInstances') ?? 'true';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('cancelRemainingInstances') ?? 'true');
     }
 
-    public function hasCancelRemainingInstances() : bool
+    public function hasCancelRemainingInstances(): bool
     {
         return $this->hasAttribute('cancelRemainingInstances');
     }
 
-    public function getOrdering() : ?string
+    public function getOrdering(): ?string
     {
         $value = $this->getAttribute('ordering');
 
@@ -40,10 +42,10 @@ class AdHocSubProcess extends SubProcess
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasOrdering() : bool
+    public function hasOrdering(): bool
     {
         return $this->hasAttribute('ordering');
     }

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class GlobalChoreographyTask extends Choreography
 {
-    public function getInitiatingParticipantRef() : ?AbstractElement
+    public function getInitiatingParticipantRef(): ?AbstractElement
     {
         $value = $this->getAttribute('initiatingParticipantRef');
 
@@ -12,10 +14,10 @@ class GlobalChoreographyTask extends Choreography
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasInitiatingParticipantRef() : bool
+    public function hasInitiatingParticipantRef(): bool
     {
         return $this->hasAttribute('initiatingParticipantRef');
     }

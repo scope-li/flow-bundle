@@ -1,13 +1,37 @@
 <?= "<?php\n" ?>
 
+declare(strict_types=1);
+
 namespace <?= $namespace ?>;
 
-<?php foreach ($useClasses as $useClass) : ?>
+<?php
+$needsDomElement = false;
+foreach ($functions as $function) {
+    if ($function['kind'] == 'element' && !$function['returnType']['list'] && $function['returnType']['nullable']) {
+        $needsDomElement = true;
+        break;
+    }
+    if ($function['kind'] == 'element' && !$function['returnType']['list'] && !$function['returnType']['nullable']) {
+        $needsDomElement = true;
+        break;
+    }
+}
+$allUseClasses = $useClasses;
+if ($needsDomElement) {
+    array_unshift($allUseClasses, 'DOMElement');
+}
+sort($allUseClasses);
+$allUseClasses = array_unique($allUseClasses);
+?>
+<?php foreach ($allUseClasses as $useClass) : ?>
 use <?= $useClass ?>;
 <?php endforeach; ?>
-<?php if ([] !== $useClasses) : ?>
+<?php if ([] !== $allUseClasses) : ?>
 
 <?php endif ?>
+<?php if ([] === $functions) : ?>
+<?= $abstract ? 'abstract ' : '' ?>class <?= $className ?><?= empty($extends) ? '' : sprintf(' extends %s', $extends) ?> {}
+<?php else: ?>
 <?= $abstract ? 'abstract ' : '' ?>class <?= $className ?><?= empty($extends) ? '' : sprintf(' extends %s', $extends) ?>
 
 {
@@ -16,7 +40,7 @@ use <?= $useClass ?>;
 <?php if ($function['returnType']['list']) : ?>
     /** @return ElementList<<?= $function['returnType']['type'] ?>> */
 <?php endif; ?>
-    public function get<?= $function['functionName'] ?>() : <?= $function['returnType']['nullable'] ? '?' : '' ?><?= $function['returnType']['list'] ? 'ElementList' : $function['returnType']['type'] ?>
+    public function get<?= $function['functionName'] ?>(): <?= $function['returnType']['nullable'] ? '?' : '' ?><?= $function['returnType']['list'] ? 'ElementList' : $function['returnType']['type'] ?>
 
     {
 <?php if ($function['kind'] == 'element') : ?>
@@ -24,12 +48,12 @@ use <?= $useClass ?>;
         $child = $this->getChild('<?= $function['name'] ?>');
 
 <?php if ($function['returnType']['nullable']) : ?>
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
 <?php else: ?>
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
 <?php endif; ?>
 <?php endif; ?>
 <?php if ($function['returnType']['type'] == 'bool') : ?>
@@ -53,31 +77,53 @@ use <?= $useClass ?>;
         return new <?= $function['returnType']['type'] ?>($child, $this->getBpmn());
 <?php endif; ?>
 <?php else: ?>
-        $value = $this->getAttribute('<?= $function['name'] ?>')<?= isset($function['returnType']['default']) ? sprintf(' ?? \'%s\'', $function['returnType']['default']) : '' ?>;
-
+<?php if (isset($function['returnType']['default'])) : ?>
+<?php if ($function['returnType']['type'] == 'bool') : ?>
+        return 'true' === ($this->getAttribute('<?= $function['name'] ?>') ?? '<?= $function['returnType']['default'] ?>');
+<?php elseif ($function['returnType']['type'] == 'int') : ?>
+        return (int) ($this->getAttribute('<?= $function['name'] ?>') ?? '<?= $function['returnType']['default'] ?>');
+<?php else: ?>
+        return $this->getAttribute('<?= $function['name'] ?>') ?? '<?= $function['returnType']['default'] ?>';
+<?php endif; ?>
+<?php else: ?>
 <?php if ($function['returnType']['nullable']) : ?>
+        $value = $this->getAttribute('<?= $function['name'] ?>');
+
         if (null === $value) {
             return null;
         }
 
-<?php endif; ?>
 <?php if ($function['returnType']['type'] == 'bool') : ?>
         return 'true' === $value;
 <?php elseif ($function['returnType']['type'] == 'int') : ?>
         return (int) $value;
 <?php elseif ($function['returnType']['type'] == 'string') : ?>
-        return (string) $value;
+        return $value;
+<?php elseif ($function['returnType']['type'] == 'AbstractElement') : ?>
+        return $this->getBpmn()->getById($value);
+<?php else: ?>
+        return new <?= $function['returnType']['type'] ?>($value, $this->getBpmn());
+<?php endif; ?>
+<?php else: ?>
+<?php if ($function['returnType']['type'] == 'bool') : ?>
+        return 'true' === $this->getAttribute('<?= $function['name'] ?>');
+<?php elseif ($function['returnType']['type'] == 'int') : ?>
+        return (int) $this->getAttribute('<?= $function['name'] ?>');
+<?php elseif ($function['returnType']['type'] == 'string') : ?>
+        return (string) $this->getAttribute('<?= $function['name'] ?>');
 <?php elseif ($function['returnType']['type'] == 'simpleType') : ?>
         return new <?= $function['returnType']['type'] ?>();
 <?php elseif ($function['returnType']['type'] == 'AbstractElement') : ?>
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('<?= $function['name'] ?>'));
 <?php else: ?>
-        return new <?= $function['returnType']['type'] ?>($value, $this->getBpmn());
+        return new <?= $function['returnType']['type'] ?>((string) $this->getAttribute('<?= $function['name'] ?>'), $this->getBpmn());
+<?php endif; ?>
+<?php endif; ?>
 <?php endif; ?>
 <?php endif; ?>
     }
 
-    public function has<?= $function['functionName'] ?>() : bool
+    public function has<?= $function['functionName'] ?>(): bool
     {
 <?php if ($function['kind'] == 'element') : ?>
         return $this->hasChild('<?=  $function['name'] ?>');
@@ -91,3 +137,4 @@ use <?= $useClass ?>;
 <?php endif ?>
 <?php endforeach; ?>
 }
+<?php endif; ?>

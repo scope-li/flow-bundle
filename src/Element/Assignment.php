@@ -1,31 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class Assignment extends BaseElement
 {
-    public function getFrom() : Expression
+    public function getFrom(): Expression
     {
         $child = $this->getChild('from');
 
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
         return new Expression($child, $this->getBpmn());
     }
 
-    public function hasFrom() : bool
+    public function hasFrom(): bool
     {
         return $this->hasChild('from');
     }
 
-    public function getTo() : Expression
+    public function getTo(): Expression
     {
         $child = $this->getChild('to');
 
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
         return new Expression($child, $this->getBpmn());
     }
 
-    public function hasTo() : bool
+    public function hasTo(): bool
     {
         return $this->hasChild('to');
     }

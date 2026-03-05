@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\ElementCamunda;
 
 use DOMElement;
-use Scopeli\FlowBundle\Element\Bpmn;
 use Scopeli\FlowBundle\Element\AbstractElement;
+use Scopeli\FlowBundle\Element\Bpmn;
 use Scopeli\FlowBundle\ElementCamunda\Parameter\EntryParameter;
 use Scopeli\FlowBundle\ElementCamunda\Parameter\InputOutputParameter;
 use Scopeli\FlowBundle\ElementCamunda\Parameter\InputParameter;
@@ -165,7 +167,7 @@ class InputOutput extends AbstractElement
             $entries = [];
             foreach ($map->getElementsByTagName('entry') as $entry) {
                 $key = $entry->getAttribute('key');
-                $entries[$key] = new EntryParameter($key, $entry->nodeValue);
+                $entries[$key] = new EntryParameter($key, (string) $entry->nodeValue);
             }
 
             /** @var InputOutputParameter $parameter */
@@ -175,7 +177,7 @@ class InputOutput extends AbstractElement
         foreach ($element->getElementsByTagName('list') as $list) {
             $values = [];
             foreach ($list->getElementsByTagName('value') as $value) {
-                $values[] = new ValueParameter($value->nodeValue);
+                $values[] = new ValueParameter((string) $value->nodeValue);
             }
 
             /** @var InputOutputParameter $parameter */

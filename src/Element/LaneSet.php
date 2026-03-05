@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class LaneSet extends BaseElement
 {
     /** @return ElementList<Lane> */
-    public function getLane() : ElementList
+    public function getLane(): ElementList
     {
         /** @var ElementList<Lane> $elements */
         $elements = new ElementList($this->getChilds('lane'));
@@ -13,12 +15,12 @@ class LaneSet extends BaseElement
         return $elements;
     }
 
-    public function hasLane() : bool
+    public function hasLane(): bool
     {
         return $this->hasChild('lane');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -26,10 +28,10 @@ class LaneSet extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

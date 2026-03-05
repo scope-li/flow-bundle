@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Serializer;
 
 use Scopeli\FlowBundle\Process\ProcessInstanceInterface;

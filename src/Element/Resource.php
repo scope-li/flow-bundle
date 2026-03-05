@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Resource extends RootElement
 {
     /** @return ElementList<ResourceParameter> */
-    public function getResourceParameter() : ElementList
+    public function getResourceParameter(): ElementList
     {
         /** @var ElementList<ResourceParameter> $elements */
         $elements = new ElementList($this->getChilds('resourceParameter'));
@@ -13,19 +15,17 @@ class Resource extends RootElement
         return $elements;
     }
 
-    public function hasResourceParameter() : bool
+    public function hasResourceParameter(): bool
     {
         return $this->hasChild('resourceParameter');
     }
 
-    public function getName() : string
+    public function getName(): string
     {
-        $value = $this->getAttribute('name');
-
-        return (string) $value;
+        return (string) $this->getAttribute('name');
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

@@ -12,39 +12,34 @@
     ],
     "config": {
         "platform": {
-            "php": "7.4.5"
+            "php": "8.3.0"
         },
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true
-        }
+        "sort-packages": true
     },
     "require": {
-        "php": ">=7.4.5",
+        "php": ">=8.3",
         "ext-dom": "*",
-        "ext-json": "*",
         "ext-libxml": "*",
-        "doctrine/orm": "~2.4",
-        "ramsey/uuid": "^4.2",
-        "symfony/config": "^4.4|^5.0",
-        "symfony/dependency-injection": "^4.4|^5.0",
-        "symfony/event-dispatcher-contracts": "^2.5",
-        "symfony/expression-language": "^4.4|^5.0",
-        "symfony/http-kernel": "^4.4|^5.0",
-        "symfony/twig-bundle": "^5.4"
+        "doctrine/orm": "^2.19|^3.0",
+        "ramsey/uuid": "^4.7|^5.0",
+        "symfony/config": "^7.4|^8.0",
+        "symfony/dependency-injection": "^7.4|^8.0",
+        "symfony/event-dispatcher": "^7.4|^8.0",
+        "symfony/expression-language": "^7.4|^8.0",
+        "symfony/http-kernel": "^7.4|^8.0",
+        "symfony/twig-bundle": "^7.4|^8.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.2",
-        "phpstan/phpstan": "^1.1",
-        "phpunit/phpunit": "^9.5",
-        "rector/rector": "^0.12.4",
-        "squizlabs/php_codesniffer": "*",
-        "symfony/console": "^5.4",
-        "symfony/doctrine-bridge": "^4.4|^5.0"
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0",
+        "rector/rector": "^2.0",
+        "symfony/console": "^7.4|^8.0",
+        "symfony/doctrine-bridge": "^7.4|^8.0"
     },
     "suggest": {
-        "doctrine/orm": ">= 2.4.0 provides transparent serialization/deserialization support for entities with Doctrine ORM",
-        "symfony/doctrine-bridge": ">=2.8.0 provides transparent serialization/deserialization support for entities with Doctrine ORM"
+        "doctrine/orm": ">= 2.19 provides transparent serialization/deserialization support for entities with Doctrine ORM",
+        "symfony/doctrine-bridge": ">=7.4 provides transparent serialization/deserialization support for entities with Doctrine ORM"
     },
     "autoload": {
         "psr-4": {
@@ -57,8 +52,17 @@
         }
     },
     "scripts": {
-        "phpcs": [
-            "./vendor/bin/phpcs"
+        "cs": [
+            "./vendor/bin/php-cs-fixer fix --dry-run --diff"
+        ],
+        "cs:fix": [
+            "./vendor/bin/php-cs-fixer fix"
+        ],
+        "rector": [
+            "./vendor/bin/rector process --dry-run"
+        ],
+        "rector:fix": [
+            "./vendor/bin/rector process"
         ],
         "phpstan": [
             "./vendor/bin/phpstan analyse src --level 9"
@@ -66,27 +70,15 @@
         "phpunit": [
             "./vendor/bin/phpunit"
         ],
-        "phpunit-coverage": [
-            "XDEBUG_MODE=coverage php vendor/bin/phpunit"
-        ],
-        "test": [
-            "@phpcs",
+        "qa": [
+            "@cs",
+            "@rector",
             "@phpstan",
             "@phpunit"
         ],
-        "php-cs-fixer": [
-            " php vendor/bin/php-cs-fixer fix src/"
-        ],
-        "uml": [
-            "phuml phuml:diagram -r -t -m -p dot src/Element doc/element_uml.png"
-        ],
-        "uml-pdf": [
-            "phuml phuml:dot src/Element element_uml.gv",
-            "neato -Tpdf element_uml.gv > doc/element_uml.pdf",
-            "rm -f element_uml.gv"
-        ],
-        "rector": [
-            "vendor/bin/rector"
+        "qa:fix": [
+            "@cs:fix",
+            "@rector:fix"
         ]
     },
     "prefer-stable": true

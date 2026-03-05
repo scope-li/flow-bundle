@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class ScriptTask extends Task
 {
-    public function getScript() : ?string
+    public function getScript(): ?string
     {
         $child = $this->getChild('script');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return $child->nodeValue;
     }
 
-    public function hasScript() : bool
+    public function hasScript(): bool
     {
         return $this->hasChild('script');
     }
 
-    public function getScriptFormat() : ?string
+    public function getScriptFormat(): ?string
     {
         $value = $this->getAttribute('scriptFormat');
 
@@ -28,15 +32,15 @@ class ScriptTask extends Task
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasScriptFormat() : bool
+    public function hasScriptFormat(): bool
     {
         return $this->hasAttribute('scriptFormat');
     }
 
-    public function getResultVariable() : ?string
+    public function getResultVariable(): ?string
     {
         $value = $this->getAttribute('resultVariable');
 
@@ -44,10 +48,10 @@ class ScriptTask extends Task
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasResultVariable() : bool
+    public function hasResultVariable(): bool
     {
         return $this->hasAttribute('resultVariable');
     }

@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class ResourceAssignmentExpression extends BaseElement
 {
-    public function getFormalExpression() : FormalExpression
+    public function getFormalExpression(): FormalExpression
     {
         $child = $this->getChild('formalExpression');
 
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
         return new FormalExpression($child, $this->getBpmn());
     }
 
-    public function hasFormalExpression() : bool
+    public function hasFormalExpression(): bool
     {
         return $this->hasChild('formalExpression');
     }

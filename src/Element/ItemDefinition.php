@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class ItemDefinition extends RootElement
 {
-    public function getStructureRef() : ?AbstractElement
+    public function getStructureRef(): ?AbstractElement
     {
         $value = $this->getAttribute('structureRef');
 
@@ -12,34 +14,30 @@ class ItemDefinition extends RootElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasStructureRef() : bool
+    public function hasStructureRef(): bool
     {
         return $this->hasAttribute('structureRef');
     }
 
-    public function getIsCollection() : bool
+    public function getIsCollection(): bool
     {
-        $value = $this->getAttribute('isCollection') ?? 'false';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('isCollection') ?? 'false');
     }
 
-    public function hasIsCollection() : bool
+    public function hasIsCollection(): bool
     {
         return $this->hasAttribute('isCollection');
     }
 
-    public function getItemKind() : string
+    public function getItemKind(): string
     {
-        $value = $this->getAttribute('itemKind') ?? 'Information';
-
-        return (string) $value;
+        return $this->getAttribute('itemKind') ?? 'Information';
     }
 
-    public function hasItemKind() : bool
+    public function hasItemKind(): bool
     {
         return $this->hasAttribute('itemKind');
     }

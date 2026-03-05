@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class CallChoreography extends ChoreographyActivity
 {
     /** @return ElementList<ParticipantAssociation> */
-    public function getParticipantAssociation() : ElementList
+    public function getParticipantAssociation(): ElementList
     {
         /** @var ElementList<ParticipantAssociation> $elements */
         $elements = new ElementList($this->getChilds('participantAssociation'));
@@ -13,12 +15,12 @@ class CallChoreography extends ChoreographyActivity
         return $elements;
     }
 
-    public function hasParticipantAssociation() : bool
+    public function hasParticipantAssociation(): bool
     {
         return $this->hasChild('participantAssociation');
     }
 
-    public function getCalledChoreographyRef() : ?AbstractElement
+    public function getCalledChoreographyRef(): ?AbstractElement
     {
         $value = $this->getAttribute('calledChoreographyRef');
 
@@ -26,10 +28,10 @@ class CallChoreography extends ChoreographyActivity
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasCalledChoreographyRef() : bool
+    public function hasCalledChoreographyRef(): bool
     {
         return $this->hasAttribute('calledChoreographyRef');
     }

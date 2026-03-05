@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Message extends RootElement
 {
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -12,15 +14,15 @@ class Message extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getItemRef() : ?AbstractElement
+    public function getItemRef(): ?AbstractElement
     {
         $value = $this->getAttribute('itemRef');
 
@@ -28,10 +30,10 @@ class Message extends RootElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasItemRef() : bool
+    public function hasItemRef(): bool
     {
         return $this->hasAttribute('itemRef');
     }

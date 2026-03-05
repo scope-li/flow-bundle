@@ -1,48 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class Participant extends BaseElement
 {
     /** @return ElementList<AbstractElement> */
-    public function getInterfaceRef() : ElementList
+    public function getInterfaceRef(): ElementList
     {
         return new ElementList($this->getRefChilds('interfaceRef'));
     }
 
-    public function hasInterfaceRef() : bool
+    public function hasInterfaceRef(): bool
     {
         return $this->hasChild('interfaceRef');
     }
 
     /** @return ElementList<AbstractElement> */
-    public function getEndPointRef() : ElementList
+    public function getEndPointRef(): ElementList
     {
         return new ElementList($this->getRefChilds('endPointRef'));
     }
 
-    public function hasEndPointRef() : bool
+    public function hasEndPointRef(): bool
     {
         return $this->hasChild('endPointRef');
     }
 
-    public function getParticipantMultiplicity() : ?ParticipantMultiplicity
+    public function getParticipantMultiplicity(): ?ParticipantMultiplicity
     {
         $child = $this->getChild('participantMultiplicity');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new ParticipantMultiplicity($child, $this->getBpmn());
     }
 
-    public function hasParticipantMultiplicity() : bool
+    public function hasParticipantMultiplicity(): bool
     {
         return $this->hasChild('participantMultiplicity');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -50,15 +54,15 @@ class Participant extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getProcessRef() : ?AbstractElement
+    public function getProcessRef(): ?AbstractElement
     {
         $value = $this->getAttribute('processRef');
 
@@ -66,10 +70,10 @@ class Participant extends BaseElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasProcessRef() : bool
+    public function hasProcessRef(): bool
     {
         return $this->hasAttribute('processRef');
     }

@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class DataInput extends BaseElement
 {
-    public function getDataState() : ?DataState
+    public function getDataState(): ?DataState
     {
         $child = $this->getChild('dataState');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new DataState($child, $this->getBpmn());
     }
 
-    public function hasDataState() : bool
+    public function hasDataState(): bool
     {
         return $this->hasChild('dataState');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -28,15 +32,15 @@ class DataInput extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getItemSubjectRef() : ?AbstractElement
+    public function getItemSubjectRef(): ?AbstractElement
     {
         $value = $this->getAttribute('itemSubjectRef');
 
@@ -44,22 +48,20 @@ class DataInput extends BaseElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasItemSubjectRef() : bool
+    public function hasItemSubjectRef(): bool
     {
         return $this->hasAttribute('itemSubjectRef');
     }
 
-    public function getIsCollection() : bool
+    public function getIsCollection(): bool
     {
-        $value = $this->getAttribute('isCollection') ?? 'false';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('isCollection') ?? 'false');
     }
 
-    public function hasIsCollection() : bool
+    public function hasIsCollection(): bool
     {
         return $this->hasAttribute('isCollection');
     }

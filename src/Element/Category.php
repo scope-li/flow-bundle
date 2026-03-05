@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Category extends RootElement
 {
     /** @return ElementList<CategoryValue> */
-    public function getCategoryValue() : ElementList
+    public function getCategoryValue(): ElementList
     {
         /** @var ElementList<CategoryValue> $elements */
         $elements = new ElementList($this->getChilds('categoryValue'));
@@ -13,12 +15,12 @@ class Category extends RootElement
         return $elements;
     }
 
-    public function hasCategoryValue() : bool
+    public function hasCategoryValue(): bool
     {
         return $this->hasChild('categoryValue');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -26,10 +28,10 @@ class Category extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

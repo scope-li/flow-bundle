@@ -1,27 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class ResourceRole extends BaseElement
 {
-    public function getResourceRef() : ?AbstractElement
+    public function getResourceRef(): ?AbstractElement
     {
         $child = $this->getChild('resourceRef');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return self::createElement($child, $this->getBpmn());
     }
 
-    public function hasResourceRef() : bool
+    public function hasResourceRef(): bool
     {
         return $this->hasChild('resourceRef');
     }
 
     /** @return ElementList<ResourceParameterBinding> */
-    public function getResourceParameterBinding() : ElementList
+    public function getResourceParameterBinding(): ElementList
     {
         /** @var ElementList<ResourceParameterBinding> $elements */
         $elements = new ElementList($this->getChilds('resourceParameterBinding'));
@@ -29,28 +33,28 @@ class ResourceRole extends BaseElement
         return $elements;
     }
 
-    public function hasResourceParameterBinding() : bool
+    public function hasResourceParameterBinding(): bool
     {
         return $this->hasChild('resourceParameterBinding');
     }
 
-    public function getResourceAssignmentExpression() : ?ResourceAssignmentExpression
+    public function getResourceAssignmentExpression(): ?ResourceAssignmentExpression
     {
         $child = $this->getChild('resourceAssignmentExpression');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new ResourceAssignmentExpression($child, $this->getBpmn());
     }
 
-    public function hasResourceAssignmentExpression() : bool
+    public function hasResourceAssignmentExpression(): bool
     {
         return $this->hasChild('resourceAssignmentExpression');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -58,10 +62,10 @@ class ResourceRole extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

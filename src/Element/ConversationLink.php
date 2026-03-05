@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class ConversationLink extends BaseElement
 {
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -12,34 +14,30 @@ class ConversationLink extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getSourceRef() : AbstractElement
+    public function getSourceRef(): AbstractElement
     {
-        $value = $this->getAttribute('sourceRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('sourceRef'));
     }
 
-    public function hasSourceRef() : bool
+    public function hasSourceRef(): bool
     {
         return $this->hasAttribute('sourceRef');
     }
 
-    public function getTargetRef() : AbstractElement
+    public function getTargetRef(): AbstractElement
     {
-        $value = $this->getAttribute('targetRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('targetRef'));
     }
 
-    public function hasTargetRef() : bool
+    public function hasTargetRef(): bool
     {
         return $this->hasAttribute('targetRef');
     }

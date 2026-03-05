@@ -36,7 +36,7 @@
       <tag name="doctrine.event_listener" event="preUpdate"/>
       <tag name="doctrine.event_listener" event="postLoad"/>
     </service>
-    <service id="scopeli_flow.event_listener.logger" class="Scopeli\FlowBundle\EventListener\OperationListener">
+    <service id="scopeli_flow.event_listener.operation" class="Scopeli\FlowBundle\EventListener\OperationListener">
       <argument type="service" id="scopeli_flow.connector.runner" />
       <tag name="kernel.event_listener" event="scopeli_flow.operation.run" method="operationRun" />
     </service>

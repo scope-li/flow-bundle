@@ -1,17 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Script;
 
 use Twig\Environment;
 
 class ScriptTwig implements ScriptInterface
 {
-    private Environment $environment;
-
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
-    }
+    public function __construct(private readonly Environment $environment) {}
 
     public function execute(string $script, array $context = []): string
     {
