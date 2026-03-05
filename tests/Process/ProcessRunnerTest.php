@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Process;
 
 use PHPUnit\Framework\TestCase;

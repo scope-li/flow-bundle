@@ -1,30 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class CorrelationPropertyRetrievalExpression extends BaseElement
 {
-    public function getMessagePath() : FormalExpression
+    public function getMessagePath(): FormalExpression
     {
         $child = $this->getChild('messagePath');
 
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
         return new FormalExpression($child, $this->getBpmn());
     }
 
-    public function hasMessagePath() : bool
+    public function hasMessagePath(): bool
     {
         return $this->hasChild('messagePath');
     }
 
-    public function getMessageRef() : AbstractElement
+    public function getMessageRef(): AbstractElement
     {
-        $value = $this->getAttribute('messageRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('messageRef'));
     }
 
-    public function hasMessageRef() : bool
+    public function hasMessageRef(): bool
     {
         return $this->hasAttribute('messageRef');
     }

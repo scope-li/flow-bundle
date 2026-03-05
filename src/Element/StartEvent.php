@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class StartEvent extends CatchEvent
 {
-    public function getIsInterrupting() : bool
+    public function getIsInterrupting(): bool
     {
-        $value = $this->getAttribute('isInterrupting') ?? 'true';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('isInterrupting') ?? 'true');
     }
 
-    public function hasIsInterrupting() : bool
+    public function hasIsInterrupting(): bool
     {
         return $this->hasAttribute('isInterrupting');
     }

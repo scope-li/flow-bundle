@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class PartnerRole extends RootElement
 {
     /** @return ElementList<AbstractElement> */
-    public function getParticipantRef() : ElementList
+    public function getParticipantRef(): ElementList
     {
         return new ElementList($this->getRefChilds('participantRef'));
     }
 
-    public function hasParticipantRef() : bool
+    public function hasParticipantRef(): bool
     {
         return $this->hasChild('participantRef');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -23,10 +25,10 @@ class PartnerRole extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

@@ -1,21 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\ElementCamunda\Parameter;
 
 class EntryParameter extends ParameterDefinition
 {
-    private string $key;
-
-    private string $value;
-
-    private ?ParameterDefinition $definition = null;
-
-    public function __construct(string $key, string $value, ?ParameterDefinition $definition = null)
-    {
-        $this->key = $key;
-        $this->value = $value;
-        $this->definition = $definition;
-    }
+    public function __construct(private readonly string $key, private readonly string $value, private readonly ?ParameterDefinition $definition = null) {}
 
     public function getKey(): string
     {

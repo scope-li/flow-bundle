@@ -1,21 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\ElementCamunda\Parameter;
 
 class ScriptParameter extends ParameterDefinition
 {
-    private string $scriptFormat;
-
-    private ?string $resource = null;
-
-    private ?string $value = null;
-
-    public function __construct(string $scriptFormat, ?string $resource = null, ?string $value = null)
-    {
-        $this->scriptFormat = $scriptFormat;
-        $this->resource = $resource;
-        $this->value = $value;
-    }
+    public function __construct(private readonly string $scriptFormat, private readonly ?string $resource = null, private readonly ?string $value = null) {}
 
     public function getScriptFormat(): string
     {

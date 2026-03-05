@@ -1,9 +1,11 @@
 <?= "<?php\n" ?>
 
+declare(strict_types=1);
+
 namespace <?= $namespace ?>;
 
-use DOMElement;
 use DOMDocument;
+use DOMElement;
 use DOMNodeList;
 use DOMXPath;
 use Scopeli\FlowBundle\Exception\BpmnElementNotFoundByIdException;
@@ -107,7 +109,7 @@ class Bpmn extends DOMDocument
             $target = $outgoing->getTargetRef();
             assert($target instanceof FlowNode);
 
-            if (!in_array($target->getId(), $cache)) {
+            if (!in_array($target->getId(), $cache, true)) {
                 $found = $target->getId() === $target->getId() || $this->isLeadsTo($target, $target, $cache);
 
                 if ($found) {
@@ -129,8 +131,7 @@ class Bpmn extends DOMDocument
         return $buffer;
     }
 
-    public function find<?= $class['className'] ?>(string $id): ?<?= $class['className'] ?>
-
+    public function find<?= $class['className'] ?>(string $id): ?<?= $class['className'] . "\n" ?>
     {
         /** @var <?= $class['className'] ?>|null $buffer */
         $buffer = $this->find('<?= $class['className'] ?>', $id);
@@ -138,8 +139,7 @@ class Bpmn extends DOMDocument
         return $buffer;
     }
 
-    public function get<?= $class['className'] ?>(string $id): <?= $class['className'] ?>
-
+    public function get<?= $class['className'] ?>(string $id): <?= $class['className'] . "\n" ?>
     {
         /** @var <?= $class['className'] ?> $buffer */
         $buffer = $this->get('<?= $class['className'] ?>', $id);

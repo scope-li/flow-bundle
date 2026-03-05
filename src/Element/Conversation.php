@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
-class Conversation extends ConversationNode
-{
-}
+class Conversation extends ConversationNode {}

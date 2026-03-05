@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class GlobalTask extends CallableElement
 {
     /** @return ElementList<Performer> */
-    public function getPerformer() : ElementList
+    public function getPerformer(): ElementList
     {
         /** @var ElementList<Performer> $elements */
         $elements = new ElementList($this->getChilds('performer'));
@@ -13,7 +15,7 @@ class GlobalTask extends CallableElement
         return $elements;
     }
 
-    public function hasPerformer() : bool
+    public function hasPerformer(): bool
     {
         return $this->hasChild('performer');
     }

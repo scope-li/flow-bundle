@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Connector;
 
 use PHPUnit\Framework\TestCase;
@@ -22,7 +24,7 @@ class ConnectorRunnerTest extends TestCase
         parent::setUp();
 
         $this->connectorRunner = new ConnectorRunner($this->getScriptRunner(), [
-            new DummyConnector()
+            new DummyConnector(),
         ]);
     }
 
@@ -44,7 +46,7 @@ class ConnectorRunnerTest extends TestCase
                     ],
                     'var3' => ['www', 'zzz'],
                     'var2' => 'Harry code',
-                    'var1' => 50
+                    'var1' => 50,
                 ]
             ),
             $processInstance->getProcessData()

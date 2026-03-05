@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\ElementCamunda;
 
 use DOMElement;
-use Scopeli\FlowBundle\Element\Bpmn;
 use Scopeli\FlowBundle\Element\AbstractElement;
+use Scopeli\FlowBundle\Element\Bpmn;
 
 class Connector extends AbstractElement
 {
@@ -19,7 +21,7 @@ class Connector extends AbstractElement
         /** @var DOMElement $childNode */
         foreach ($element->childNodes as $childNode) {
             if ('connectorId' === $childNode->localName) {
-                $this->connectorId = $childNode->nodeValue;
+                $this->connectorId = (string) $childNode->nodeValue;
             }
         }
 

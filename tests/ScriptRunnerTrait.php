@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle;
 
 use Scopeli\FlowBundle\Script\ScriptRunner;

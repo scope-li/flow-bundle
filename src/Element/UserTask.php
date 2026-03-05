@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class UserTask extends Task
 {
     /** @return ElementList<Rendering> */
-    public function getRendering() : ElementList
+    public function getRendering(): ElementList
     {
         /** @var ElementList<Rendering> $elements */
         $elements = new ElementList($this->getChilds('rendering'));
@@ -13,24 +15,22 @@ class UserTask extends Task
         return $elements;
     }
 
-    public function hasRendering() : bool
+    public function hasRendering(): bool
     {
         return $this->hasChild('rendering');
     }
 
-    public function getImplementation() : string
+    public function getImplementation(): string
     {
-        $value = $this->getAttribute('implementation') ?? '##unspecified';
-
-        return (string) $value;
+        return $this->getAttribute('implementation') ?? '##unspecified';
     }
 
-    public function hasImplementation() : bool
+    public function hasImplementation(): bool
     {
         return $this->hasAttribute('implementation');
     }
 
-    public function getFormKey() : ?string
+    public function getFormKey(): ?string
     {
         $value = $this->getAttribute('formKey');
 
@@ -38,15 +38,15 @@ class UserTask extends Task
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasFormKey() : bool
+    public function hasFormKey(): bool
     {
         return $this->hasAttribute('formKey');
     }
 
-    public function getAssignee() : ?string
+    public function getAssignee(): ?string
     {
         $value = $this->getAttribute('assignee');
 
@@ -54,10 +54,10 @@ class UserTask extends Task
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasAssignee() : bool
+    public function hasAssignee(): bool
     {
         return $this->hasAttribute('assignee');
     }

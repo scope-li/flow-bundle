@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\EventListener;
 
 use Psr\Log\LoggerInterface;
@@ -9,12 +11,9 @@ use Scopeli\FlowBundle\Event\ProcessInstanceEvent;
 
 class LoggerListener
 {
-    private LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
+    public function __construct(
+        private readonly LoggerInterface $logger,
+    ) {}
 
     public function loggingProcessInstanceEvent(ProcessInstanceEvent $event): void
     {

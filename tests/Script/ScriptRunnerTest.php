@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Script;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Scopeli\FlowBundle\Exception\InvalidArgumentException;
 use Scopeli\FlowBundle\ScriptRunnerTrait;
@@ -34,15 +37,13 @@ class ScriptRunnerTest extends TestCase
         $this->scriptRunner->run('javascript', 'console.log()', []);
     }
 
-    /**
-     * @dataProvider dataRun
-     */
+    #[DataProvider('dataRun')]
     public function testRun(string $expected, string $type, string $script, array $context): void
     {
         $this->assertSame($expected, $this->scriptRunner->run($type, $script, $context));
     }
 
-    public function dataRun(): iterable
+    public static function dataRun(): iterable
     {
         return [
             'Twig' => ['Test', 'twig', "{{ 'Test' }}", []],

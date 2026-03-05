@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
@@ -11,13 +10,7 @@
     <ini name="error_reporting" value="-1"/>
   </php>
 
-  <logging>
-    <testdoxHtml outputFile="./tmp/logging/testdox.html"/>
-    <testdoxText outputFile="./tmp/logging/testdox.txt"/>
-    <text outputFile="./tmp/logging/logfile.txt"/>
-  </logging>
-
-  <coverage>
+  <source>
     <include>
       <directory suffix=".php">src</directory>
     </include>
@@ -25,21 +18,12 @@
       <directory suffix=".php">src/Element</directory>
       <directory suffix=".php">src/Ressources</directory>
     </exclude>
-
-    <report>
-      <html outputDirectory="./tmp/coverage/html"
-            lowUpperBound="50"
-            highLowerBound="90"/>
-      <text outputFile="php://stdout"
-            showUncoveredFiles="false"
-            showOnlySummary="true"/>
-    </report>
-  </coverage>
+  </source>
 
   <testsuites>
     <testsuite name="Project Test Suite">
       <directory>tests/</directory>
+      <exclude>tests/Serializer/AbstractSerializerTest.php</exclude>
     </testsuite>
   </testsuites>
-
 </phpunit>

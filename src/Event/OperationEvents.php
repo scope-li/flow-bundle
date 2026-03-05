@@ -1,14 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Event;
 
 final class OperationEvents
 {
-    /**
-     * Triggered when a FlowNode with operation is running.
-     *
-     * @Event("Scopeli\FlowBundle\Event\OperationEvent")
-     * @var string
-     */
-    public const RUN = 'scopeli_flow.operation.run';
+    public const string RUN = 'scopeli_flow.operation.run';
 }

@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Transaction extends SubProcess
 {
-    public function getMethod() : string
+    public function getMethod(): string
     {
-        $value = $this->getAttribute('method') ?? '##Compensate';
-
-        return (string) $value;
+        return $this->getAttribute('method') ?? '##Compensate';
     }
 
-    public function hasMethod() : bool
+    public function hasMethod(): bool
     {
         return $this->hasAttribute('method');
     }

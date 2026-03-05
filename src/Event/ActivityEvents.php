@@ -1,56 +1,20 @@
 <?php
 
-namespace Scopeli\FlowBundle\Event;
+declare(strict_types=1);
 
-use Scopeli\FlowBundle\Element\Activity;
+namespace Scopeli\FlowBundle\Event;
 
 final class ActivityEvents
 {
-    /**
-     * Triggered when a Activity get state "inactive".
-     *
-     * @Event("Scopeli\FlowBundle\Event\ActivityEvent")
-     * @var string
-     */
-    public const INACTIVE = 'scopeli_flow.activity.inactive';
+    public const string INACTIVE = 'scopeli_flow.activity.inactive';
 
-    /**
-     * Triggered when a Activity get state "ready".
-     *
-     * @Event("Scopeli\FlowBundle\Event\ActivityEvent")
-     * @var string
-     */
-    public const READY = 'scopeli_flow.activity.ready';
+    public const string READY = 'scopeli_flow.activity.ready';
 
-    /**
-     * Triggered when a Activity get state "active".
-     *
-     * @Event("Scopeli\FlowBundle\Event\ActivityEvent")
-     * @var string
-     */
-    public const ACTIVE = 'scopeli_flow.activity.active';
+    public const string ACTIVE = 'scopeli_flow.activity.active';
 
-    /**
-     * Triggered when a Activity get state "completing".
-     *
-     * @Event("Scopeli\FlowBundle\Event\ActivityEvent")
-     * @var string
-     */
-    public const COMPLETING = 'scopeli_flow.activity.completing';
+    public const string COMPLETING = 'scopeli_flow.activity.completing';
 
-    /**
-     * Triggered when a Activity get state "completed".
-     *
-     * @Event("Scopeli\FlowBundle\Event\ActivityEvent")
-     * @var string
-     */
-    public const COMPLETED = 'scopeli_flow.activity.completed';
+    public const string COMPLETED = 'scopeli_flow.activity.completed';
 
-    /**
-     * Triggered when a Activity get state "closed".
-     *
-     * @Event("Scopeli\FlowBundle\Event\ActivityEvent")
-     * @var string
-     */
-    public const CLOSED = 'scopeli_flow.activity.closed';
+    public const string CLOSED = 'scopeli_flow.activity.closed';
 }

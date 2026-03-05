@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Process;
 
 use Ramsey\Uuid\Uuid;
@@ -8,16 +10,13 @@ class Token implements TokenInterface
 {
     private string $id;
 
-    private string $currentId;
-
     private ?string $previousId = null;
 
     private string $state;
 
-    public function __construct(string $currentId)
+    public function __construct(private string $currentId)
     {
-        $this->id = (string)Uuid::uuid4();
-        $this->currentId = $currentId;
+        $this->id = (string) Uuid::uuid4();
         $this->setInactive();
     }
 

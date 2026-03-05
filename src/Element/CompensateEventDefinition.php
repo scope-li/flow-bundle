@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class CompensateEventDefinition extends EventDefinition
 {
-    public function getWaitForCompletion() : ?bool
+    public function getWaitForCompletion(): ?bool
     {
         $value = $this->getAttribute('waitForCompletion');
 
@@ -15,12 +17,12 @@ class CompensateEventDefinition extends EventDefinition
         return 'true' === $value;
     }
 
-    public function hasWaitForCompletion() : bool
+    public function hasWaitForCompletion(): bool
     {
         return $this->hasAttribute('waitForCompletion');
     }
 
-    public function getActivityRef() : ?AbstractElement
+    public function getActivityRef(): ?AbstractElement
     {
         $value = $this->getAttribute('activityRef');
 
@@ -28,10 +30,10 @@ class CompensateEventDefinition extends EventDefinition
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasActivityRef() : bool
+    public function hasActivityRef(): bool
     {
         return $this->hasAttribute('activityRef');
     }

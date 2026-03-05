@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 abstract class Event extends FlowNode
 {
     /** @return ElementList<Property> */
-    public function getProperty() : ElementList
+    public function getProperty(): ElementList
     {
         /** @var ElementList<Property> $elements */
         $elements = new ElementList($this->getChilds('property'));
@@ -13,7 +15,7 @@ abstract class Event extends FlowNode
         return $elements;
     }
 
-    public function hasProperty() : bool
+    public function hasProperty(): bool
     {
         return $this->hasChild('property');
     }

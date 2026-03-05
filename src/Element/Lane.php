@@ -1,37 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class Lane extends BaseElement
 {
     /** @return ElementList<AbstractElement> */
-    public function getFlowNodeRef() : ElementList
+    public function getFlowNodeRef(): ElementList
     {
         return new ElementList($this->getRefChilds('flowNodeRef'));
     }
 
-    public function hasFlowNodeRef() : bool
+    public function hasFlowNodeRef(): bool
     {
         return $this->hasChild('flowNodeRef');
     }
 
-    public function getChildLaneSet() : ?LaneSet
+    public function getChildLaneSet(): ?LaneSet
     {
         $child = $this->getChild('childLaneSet');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new LaneSet($child, $this->getBpmn());
     }
 
-    public function hasChildLaneSet() : bool
+    public function hasChildLaneSet(): bool
     {
         return $this->hasChild('childLaneSet');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -39,15 +43,15 @@ class Lane extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getPartitionElementRef() : ?AbstractElement
+    public function getPartitionElementRef(): ?AbstractElement
     {
         $value = $this->getAttribute('partitionElementRef');
 
@@ -55,10 +59,10 @@ class Lane extends BaseElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasPartitionElementRef() : bool
+    public function hasPartitionElementRef(): bool
     {
         return $this->hasAttribute('partitionElementRef');
     }

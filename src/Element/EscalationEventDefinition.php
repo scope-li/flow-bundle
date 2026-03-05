@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class EscalationEventDefinition extends EventDefinition
 {
-    public function getEscalationRef() : ?AbstractElement
+    public function getEscalationRef(): ?AbstractElement
     {
         $value = $this->getAttribute('escalationRef');
 
@@ -12,10 +14,10 @@ class EscalationEventDefinition extends EventDefinition
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasEscalationRef() : bool
+    public function hasEscalationRef(): bool
     {
         return $this->hasAttribute('escalationRef');
     }

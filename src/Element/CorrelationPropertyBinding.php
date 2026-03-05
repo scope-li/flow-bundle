@@ -1,30 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class CorrelationPropertyBinding extends BaseElement
 {
-    public function getDataPath() : FormalExpression
+    public function getDataPath(): FormalExpression
     {
         $child = $this->getChild('dataPath');
 
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
         return new FormalExpression($child, $this->getBpmn());
     }
 
-    public function hasDataPath() : bool
+    public function hasDataPath(): bool
     {
         return $this->hasChild('dataPath');
     }
 
-    public function getCorrelationPropertyRef() : AbstractElement
+    public function getCorrelationPropertyRef(): AbstractElement
     {
-        $value = $this->getAttribute('correlationPropertyRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('correlationPropertyRef'));
     }
 
-    public function hasCorrelationPropertyRef() : bool
+    public function hasCorrelationPropertyRef(): bool
     {
         return $this->hasAttribute('correlationPropertyRef');
     }

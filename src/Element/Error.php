@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Error extends RootElement
 {
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -12,15 +14,15 @@ class Error extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getErrorCode() : ?string
+    public function getErrorCode(): ?string
     {
         $value = $this->getAttribute('errorCode');
 
@@ -28,15 +30,15 @@ class Error extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasErrorCode() : bool
+    public function hasErrorCode(): bool
     {
         return $this->hasAttribute('errorCode');
     }
 
-    public function getStructureRef() : ?AbstractElement
+    public function getStructureRef(): ?AbstractElement
     {
         $value = $this->getAttribute('structureRef');
 
@@ -44,10 +46,10 @@ class Error extends RootElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasStructureRef() : bool
+    public function hasStructureRef(): bool
     {
         return $this->hasAttribute('structureRef');
     }

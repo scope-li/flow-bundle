@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Process;
 
+use Scopeli\FlowBundle\Element\AbstractElement;
 use Scopeli\FlowBundle\Element\Activity;
 use Scopeli\FlowBundle\Element\BoundaryEvent;
 use Scopeli\FlowBundle\Element\CallActivity;
@@ -43,27 +46,14 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ProcessRunner implements ProcessRunnerInterface
 {
-    protected ProcessInstanceRepositoryInterface $processInstanceRepository;
-
-    private ProcessDefinitionRepositoryInterface $processDefinitionRepository;
-
-    private ScriptRunner $scriptRunner;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     protected ?ProcessInstanceInterface $processInstance = null;
 
     public function __construct(
-        ProcessInstanceRepositoryInterface $processInstanceRepository,
-        ProcessDefinitionRepositoryInterface $processDefinitionRepository,
-        ScriptRunner $scriptRunner,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->processInstanceRepository = $processInstanceRepository;
-        $this->processDefinitionRepository = $processDefinitionRepository;
-        $this->scriptRunner = $scriptRunner;
-        $this->eventDispatcher = $eventDispatcher;
-    }
+        protected readonly ProcessInstanceRepositoryInterface $processInstanceRepository,
+        private readonly ProcessDefinitionRepositoryInterface $processDefinitionRepository,
+        private readonly ScriptRunner $scriptRunner,
+        protected readonly EventDispatcherInterface $eventDispatcher,
+    ) {}
 
     /**
      * @param string|int $processDefinitionId
@@ -224,14 +214,10 @@ class ProcessRunner implements ProcessRunnerInterface
             foreach ($this->getProcessInstance()->findTokenByState([TokenInterface::STATE_INACTIVE]) as $token) {
                 $flowNode = $this->getProcessInstance()->getBpmn()->getById($token->getCurrentId());
 
-                switch (true) {
-                    case $flowNode instanceof ParallelGateway:
-                    case $flowNode instanceof InclusiveGateway:
-                        $this->readyParallelOrInclusiveGateway($token, $flowNode);
-                        break;
-                    default:
-                        $token->setReady();
-                }
+                match (true) {
+                    $flowNode instanceof ParallelGateway, $flowNode instanceof InclusiveGateway => $this->readyParallelOrInclusiveGateway($token, $flowNode),
+                    default => $token->setReady(),
+                };
 
                 if ($flowNode instanceof Activity && $token->isReady()) {
                     $this->dispatchActivityEvent($flowNode, ActivityEvents::READY);
@@ -286,14 +272,14 @@ class ProcessRunner implements ProcessRunnerInterface
                     case $flowNode instanceof ExclusiveGateway:
                     case $flowNode instanceof InclusiveGateway:
                     case $flowNode instanceof ParallelGateway:
-                    // ToDo: Add logic and test for calling CallActivity and SubProcess.
+                        // ToDo: Add logic and test for calling CallActivity and SubProcess.
                     case $flowNode instanceof CallActivity:
                     case $flowNode instanceof SubProcess:
                     case $flowNode instanceof BoundaryEvent && $flowNode->hasMessageEventDefinition():
                         $token->setCompleting();
                         break;
                     default:
-                        throw new RuntimeException(sprintf('Flow element "%s" not supported yet!', get_class($flowNode)));
+                        throw new RuntimeException(sprintf('Flow element "%s" not supported yet!', $flowNode::class));
                 }
 
                 if ($flowNode instanceof Activity && $token->isCompleting()) {
@@ -336,22 +322,13 @@ class ProcessRunner implements ProcessRunnerInterface
                 foreach ($this->getProcessInstance()->findTokenByState([TokenInterface::STATE_CLOSED]) as $token) {
                     $flowElement = $this->getProcessInstance()->getBpmn()->getFlowElementById($token->getCurrentId());
 
-                    switch (true) {
-                        case $flowElement instanceof EndEvent:
-                            $this->closeEndEvent($token, $flowElement);
-                            break;
-                        case $flowElement instanceof ExclusiveGateway:
-                            $this->closeExclusiveGateway($token, $flowElement);
-                            break;
-                        case $flowElement instanceof InclusiveGateway:
-                            $this->closeInclusiveGateway($token, $flowElement);
-                            break;
-                        case $flowElement instanceof ParallelGateway:
-                            $this->closeParallelGateway($token, $flowElement);
-                            break;
-                        default:
-                            $this->closeFlowElement($token, $flowElement);
-                    }
+                    match (true) {
+                        $flowElement instanceof EndEvent => $this->closeEndEvent($token, $flowElement),
+                        $flowElement instanceof ExclusiveGateway => $this->closeExclusiveGateway($token, $flowElement),
+                        $flowElement instanceof InclusiveGateway => $this->closeInclusiveGateway($token, $flowElement),
+                        $flowElement instanceof ParallelGateway => $this->closeParallelGateway($token, $flowElement),
+                        default => $this->closeFlowElement($token, $flowElement),
+                    };
 
                     $this->processInstanceRepository->saveProcessInstance($this->getProcessInstance());
                 }
@@ -424,7 +401,7 @@ class ProcessRunner implements ProcessRunnerInterface
                 if ($outgoing->getId() !== $inclusiveGateway->getDefault()) {
                     $conditionExpression = $outgoing->getConditionExpression();
                     if ($conditionExpression instanceof Expression) {
-                        $expression = $conditionExpression->getElement()->nodeValue;
+                        $expression = (string) $conditionExpression->getElement()->nodeValue;
                         if ($this->evaluateExpression($expression, $this->getProcessInstance()->getProcessData())) {
                             $selectedOutgoings[] = $outgoing;
                         }
@@ -433,7 +410,7 @@ class ProcessRunner implements ProcessRunnerInterface
             }
         }
 
-        if ([] === $selectedOutgoings && null !== $inclusiveGateway->getDefault()) {
+        if ([] === $selectedOutgoings && $inclusiveGateway->getDefault() instanceof AbstractElement) {
             $selectedOutgoings[] = $inclusiveGateway->getDefault();
         }
 
@@ -468,7 +445,7 @@ class ProcessRunner implements ProcessRunnerInterface
                 if ($outgoing->getId() !== $exclusiveGateway->getDefault()) {
                     $conditionExpression = $outgoing->getConditionExpression();
                     if ($conditionExpression instanceof Expression) {
-                        $expression = $conditionExpression->getElement()->nodeValue;
+                        $expression = (string) $conditionExpression->getElement()->nodeValue;
                         if ($this->evaluateExpression($expression, $this->getProcessInstance()->getProcessData())) {
                             $selectedOutgoing = $outgoing;
                         }
@@ -477,7 +454,7 @@ class ProcessRunner implements ProcessRunnerInterface
             }
         }
 
-        if (null === $selectedOutgoing && null !== $exclusiveGateway->getDefault()) {
+        if (null === $selectedOutgoing && $exclusiveGateway->getDefault() instanceof AbstractElement) {
             $selectedOutgoing = $exclusiveGateway->getDefault();
         }
 
@@ -574,10 +551,9 @@ class ProcessRunner implements ProcessRunnerInterface
     }
 
     /**
-     * @param string|int $processDefinitionId
      * @param mixed[] $processData
      */
-    private function addProcessInstance($processDefinitionId, array $processData = []): void
+    private function addProcessInstance(string|int $processDefinitionId, array $processData = []): void
     {
         $processDefinition = $this->processDefinitionRepository->findProcessDefinition($processDefinitionId);
         if (!is_string($processDefinition)) {

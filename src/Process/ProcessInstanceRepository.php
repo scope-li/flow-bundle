@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Process;
 
 class ProcessInstanceRepository implements ProcessInstanceRepositoryInterface
@@ -19,10 +21,6 @@ class ProcessInstanceRepository implements ProcessInstanceRepositoryInterface
 
     public function findProcessInstance(string $id): ?ProcessInstanceInterface
     {
-        if (isset($this->storage[$id])) {
-            return $this->storage[$id];
-        }
-
-        return null;
+        return $this->storage[$id] ?? null;
     }
 }

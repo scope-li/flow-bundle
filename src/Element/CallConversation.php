@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class CallConversation extends ConversationNode
 {
     /** @return ElementList<ParticipantAssociation> */
-    public function getParticipantAssociation() : ElementList
+    public function getParticipantAssociation(): ElementList
     {
         /** @var ElementList<ParticipantAssociation> $elements */
         $elements = new ElementList($this->getChilds('participantAssociation'));
@@ -13,12 +15,12 @@ class CallConversation extends ConversationNode
         return $elements;
     }
 
-    public function hasParticipantAssociation() : bool
+    public function hasParticipantAssociation(): bool
     {
         return $this->hasChild('participantAssociation');
     }
 
-    public function getCalledCollaborationRef() : ?AbstractElement
+    public function getCalledCollaborationRef(): ?AbstractElement
     {
         $value = $this->getAttribute('calledCollaborationRef');
 
@@ -26,10 +28,10 @@ class CallConversation extends ConversationNode
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasCalledCollaborationRef() : bool
+    public function hasCalledCollaborationRef(): bool
     {
         return $this->hasAttribute('calledCollaborationRef');
     }

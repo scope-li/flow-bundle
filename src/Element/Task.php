@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
-class Task extends Activity
-{
-}
+class Task extends Activity {}

@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class ComplexGateway extends Gateway
 {
-    public function getActivationCondition() : ?Expression
+    public function getActivationCondition(): ?Expression
     {
         $child = $this->getChild('activationCondition');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new Expression($child, $this->getBpmn());
     }
 
-    public function hasActivationCondition() : bool
+    public function hasActivationCondition(): bool
     {
         return $this->hasChild('activationCondition');
     }
 
-    public function getDefault() : ?AbstractElement
+    public function getDefault(): ?AbstractElement
     {
         $value = $this->getAttribute('default');
 
@@ -28,10 +32,10 @@ class ComplexGateway extends Gateway
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasDefault() : bool
+    public function hasDefault(): bool
     {
         return $this->hasAttribute('default');
     }

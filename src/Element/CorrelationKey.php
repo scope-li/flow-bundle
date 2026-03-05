@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class CorrelationKey extends BaseElement
 {
     /** @return ElementList<AbstractElement> */
-    public function getCorrelationPropertyRef() : ElementList
+    public function getCorrelationPropertyRef(): ElementList
     {
         return new ElementList($this->getRefChilds('correlationPropertyRef'));
     }
 
-    public function hasCorrelationPropertyRef() : bool
+    public function hasCorrelationPropertyRef(): bool
     {
         return $this->hasChild('correlationPropertyRef');
     }
 
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -23,10 +25,10 @@ class CorrelationKey extends BaseElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }

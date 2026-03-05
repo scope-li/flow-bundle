@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Process;
 
 use DateTime;
@@ -16,9 +18,6 @@ class ProcessInstance implements ProcessInstanceInterface
 
     private Bpmn $bpmn;
 
-    /** @var mixed[] */
-    private array $processData = [];
-
     /** @var TokenInterface[] */
     private array $tokens = [];
 
@@ -34,11 +33,10 @@ class ProcessInstance implements ProcessInstanceInterface
     /**
      * @param mixed[] $processData
      */
-    public function __construct(string $bpmn, array $processData = [])
+    public function __construct(string $bpmn, private array $processData = [])
     {
         $this->id = (string) Uuid::uuid4();
         $this->bpmn = $this->createBpmn($bpmn);
-        $this->processData = $processData;
     }
 
     /**
@@ -194,13 +192,13 @@ class ProcessInstance implements ProcessInstanceInterface
     /** @return TokenInterface[] */
     public function findTokenById(string $id): array
     {
-        return array_filter($this->tokens, fn (TokenInterface $token): bool => $token->getId() === $id);
+        return array_filter($this->tokens, fn(TokenInterface $token): bool => $token->getId() === $id);
     }
 
     /** @return TokenInterface[] */
     public function findTokenByState(array $states): array
     {
-        return array_filter($this->tokens, fn (TokenInterface $token): bool => in_array($token->getState(), $states));
+        return array_filter($this->tokens, fn(TokenInterface $token): bool => in_array($token->getState(), $states, true));
     }
 
     public function createToken(string $currentId): TokenInterface

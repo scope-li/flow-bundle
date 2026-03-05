@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
-class EndEvent extends ThrowEvent
-{
-}
+class EndEvent extends ThrowEvent {}

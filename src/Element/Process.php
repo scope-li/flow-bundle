@@ -1,43 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class Process extends CallableElement
 {
-    public function getAuditing() : ?Auditing
+    public function getAuditing(): ?Auditing
     {
         $child = $this->getChild('auditing');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new Auditing($child, $this->getBpmn());
     }
 
-    public function hasAuditing() : bool
+    public function hasAuditing(): bool
     {
         return $this->hasChild('auditing');
     }
 
-    public function getMonitoring() : ?Monitoring
+    public function getMonitoring(): ?Monitoring
     {
         $child = $this->getChild('monitoring');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return new Monitoring($child, $this->getBpmn());
     }
 
-    public function hasMonitoring() : bool
+    public function hasMonitoring(): bool
     {
         return $this->hasChild('monitoring');
     }
 
     /** @return ElementList<Property> */
-    public function getProperty() : ElementList
+    public function getProperty(): ElementList
     {
         /** @var ElementList<Property> $elements */
         $elements = new ElementList($this->getChilds('property'));
@@ -45,13 +49,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasProperty() : bool
+    public function hasProperty(): bool
     {
         return $this->hasChild('property');
     }
 
     /** @return ElementList<LaneSet> */
-    public function getLaneSet() : ElementList
+    public function getLaneSet(): ElementList
     {
         /** @var ElementList<LaneSet> $elements */
         $elements = new ElementList($this->getChilds('laneSet'));
@@ -59,13 +63,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasLaneSet() : bool
+    public function hasLaneSet(): bool
     {
         return $this->hasChild('laneSet');
     }
 
     /** @return ElementList<AdHocSubProcess> */
-    public function getAdHocSubProcess() : ElementList
+    public function getAdHocSubProcess(): ElementList
     {
         /** @var ElementList<AdHocSubProcess> $elements */
         $elements = new ElementList($this->getChilds('adHocSubProcess'));
@@ -73,13 +77,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasAdHocSubProcess() : bool
+    public function hasAdHocSubProcess(): bool
     {
         return $this->hasChild('adHocSubProcess');
     }
 
     /** @return ElementList<BoundaryEvent> */
-    public function getBoundaryEvent() : ElementList
+    public function getBoundaryEvent(): ElementList
     {
         /** @var ElementList<BoundaryEvent> $elements */
         $elements = new ElementList($this->getChilds('boundaryEvent'));
@@ -87,13 +91,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasBoundaryEvent() : bool
+    public function hasBoundaryEvent(): bool
     {
         return $this->hasChild('boundaryEvent');
     }
 
     /** @return ElementList<BusinessRuleTask> */
-    public function getBusinessRuleTask() : ElementList
+    public function getBusinessRuleTask(): ElementList
     {
         /** @var ElementList<BusinessRuleTask> $elements */
         $elements = new ElementList($this->getChilds('businessRuleTask'));
@@ -101,13 +105,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasBusinessRuleTask() : bool
+    public function hasBusinessRuleTask(): bool
     {
         return $this->hasChild('businessRuleTask');
     }
 
     /** @return ElementList<CallActivity> */
-    public function getCallActivity() : ElementList
+    public function getCallActivity(): ElementList
     {
         /** @var ElementList<CallActivity> $elements */
         $elements = new ElementList($this->getChilds('callActivity'));
@@ -115,13 +119,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasCallActivity() : bool
+    public function hasCallActivity(): bool
     {
         return $this->hasChild('callActivity');
     }
 
     /** @return ElementList<CallChoreography> */
-    public function getCallChoreography() : ElementList
+    public function getCallChoreography(): ElementList
     {
         /** @var ElementList<CallChoreography> $elements */
         $elements = new ElementList($this->getChilds('callChoreography'));
@@ -129,13 +133,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasCallChoreography() : bool
+    public function hasCallChoreography(): bool
     {
         return $this->hasChild('callChoreography');
     }
 
     /** @return ElementList<ChoreographyTask> */
-    public function getChoreographyTask() : ElementList
+    public function getChoreographyTask(): ElementList
     {
         /** @var ElementList<ChoreographyTask> $elements */
         $elements = new ElementList($this->getChilds('choreographyTask'));
@@ -143,13 +147,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasChoreographyTask() : bool
+    public function hasChoreographyTask(): bool
     {
         return $this->hasChild('choreographyTask');
     }
 
     /** @return ElementList<ComplexGateway> */
-    public function getComplexGateway() : ElementList
+    public function getComplexGateway(): ElementList
     {
         /** @var ElementList<ComplexGateway> $elements */
         $elements = new ElementList($this->getChilds('complexGateway'));
@@ -157,13 +161,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasComplexGateway() : bool
+    public function hasComplexGateway(): bool
     {
         return $this->hasChild('complexGateway');
     }
 
     /** @return ElementList<DataObject> */
-    public function getDataObject() : ElementList
+    public function getDataObject(): ElementList
     {
         /** @var ElementList<DataObject> $elements */
         $elements = new ElementList($this->getChilds('dataObject'));
@@ -171,13 +175,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasDataObject() : bool
+    public function hasDataObject(): bool
     {
         return $this->hasChild('dataObject');
     }
 
     /** @return ElementList<DataObjectReference> */
-    public function getDataObjectReference() : ElementList
+    public function getDataObjectReference(): ElementList
     {
         /** @var ElementList<DataObjectReference> $elements */
         $elements = new ElementList($this->getChilds('dataObjectReference'));
@@ -185,13 +189,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasDataObjectReference() : bool
+    public function hasDataObjectReference(): bool
     {
         return $this->hasChild('dataObjectReference');
     }
 
     /** @return ElementList<DataStoreReference> */
-    public function getDataStoreReference() : ElementList
+    public function getDataStoreReference(): ElementList
     {
         /** @var ElementList<DataStoreReference> $elements */
         $elements = new ElementList($this->getChilds('dataStoreReference'));
@@ -199,13 +203,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasDataStoreReference() : bool
+    public function hasDataStoreReference(): bool
     {
         return $this->hasChild('dataStoreReference');
     }
 
     /** @return ElementList<EndEvent> */
-    public function getEndEvent() : ElementList
+    public function getEndEvent(): ElementList
     {
         /** @var ElementList<EndEvent> $elements */
         $elements = new ElementList($this->getChilds('endEvent'));
@@ -213,13 +217,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasEndEvent() : bool
+    public function hasEndEvent(): bool
     {
         return $this->hasChild('endEvent');
     }
 
     /** @return ElementList<Event> */
-    public function getEvent() : ElementList
+    public function getEvent(): ElementList
     {
         /** @var ElementList<Event> $elements */
         $elements = new ElementList($this->getChilds('event'));
@@ -227,13 +231,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasEvent() : bool
+    public function hasEvent(): bool
     {
         return $this->hasChild('event');
     }
 
     /** @return ElementList<EventBasedGateway> */
-    public function getEventBasedGateway() : ElementList
+    public function getEventBasedGateway(): ElementList
     {
         /** @var ElementList<EventBasedGateway> $elements */
         $elements = new ElementList($this->getChilds('eventBasedGateway'));
@@ -241,13 +245,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasEventBasedGateway() : bool
+    public function hasEventBasedGateway(): bool
     {
         return $this->hasChild('eventBasedGateway');
     }
 
     /** @return ElementList<ExclusiveGateway> */
-    public function getExclusiveGateway() : ElementList
+    public function getExclusiveGateway(): ElementList
     {
         /** @var ElementList<ExclusiveGateway> $elements */
         $elements = new ElementList($this->getChilds('exclusiveGateway'));
@@ -255,13 +259,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasExclusiveGateway() : bool
+    public function hasExclusiveGateway(): bool
     {
         return $this->hasChild('exclusiveGateway');
     }
 
     /** @return ElementList<ImplicitThrowEvent> */
-    public function getImplicitThrowEvent() : ElementList
+    public function getImplicitThrowEvent(): ElementList
     {
         /** @var ElementList<ImplicitThrowEvent> $elements */
         $elements = new ElementList($this->getChilds('implicitThrowEvent'));
@@ -269,13 +273,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasImplicitThrowEvent() : bool
+    public function hasImplicitThrowEvent(): bool
     {
         return $this->hasChild('implicitThrowEvent');
     }
 
     /** @return ElementList<InclusiveGateway> */
-    public function getInclusiveGateway() : ElementList
+    public function getInclusiveGateway(): ElementList
     {
         /** @var ElementList<InclusiveGateway> $elements */
         $elements = new ElementList($this->getChilds('inclusiveGateway'));
@@ -283,13 +287,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasInclusiveGateway() : bool
+    public function hasInclusiveGateway(): bool
     {
         return $this->hasChild('inclusiveGateway');
     }
 
     /** @return ElementList<IntermediateCatchEvent> */
-    public function getIntermediateCatchEvent() : ElementList
+    public function getIntermediateCatchEvent(): ElementList
     {
         /** @var ElementList<IntermediateCatchEvent> $elements */
         $elements = new ElementList($this->getChilds('intermediateCatchEvent'));
@@ -297,13 +301,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasIntermediateCatchEvent() : bool
+    public function hasIntermediateCatchEvent(): bool
     {
         return $this->hasChild('intermediateCatchEvent');
     }
 
     /** @return ElementList<IntermediateThrowEvent> */
-    public function getIntermediateThrowEvent() : ElementList
+    public function getIntermediateThrowEvent(): ElementList
     {
         /** @var ElementList<IntermediateThrowEvent> $elements */
         $elements = new ElementList($this->getChilds('intermediateThrowEvent'));
@@ -311,13 +315,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasIntermediateThrowEvent() : bool
+    public function hasIntermediateThrowEvent(): bool
     {
         return $this->hasChild('intermediateThrowEvent');
     }
 
     /** @return ElementList<ManualTask> */
-    public function getManualTask() : ElementList
+    public function getManualTask(): ElementList
     {
         /** @var ElementList<ManualTask> $elements */
         $elements = new ElementList($this->getChilds('manualTask'));
@@ -325,13 +329,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasManualTask() : bool
+    public function hasManualTask(): bool
     {
         return $this->hasChild('manualTask');
     }
 
     /** @return ElementList<ParallelGateway> */
-    public function getParallelGateway() : ElementList
+    public function getParallelGateway(): ElementList
     {
         /** @var ElementList<ParallelGateway> $elements */
         $elements = new ElementList($this->getChilds('parallelGateway'));
@@ -339,13 +343,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasParallelGateway() : bool
+    public function hasParallelGateway(): bool
     {
         return $this->hasChild('parallelGateway');
     }
 
     /** @return ElementList<ReceiveTask> */
-    public function getReceiveTask() : ElementList
+    public function getReceiveTask(): ElementList
     {
         /** @var ElementList<ReceiveTask> $elements */
         $elements = new ElementList($this->getChilds('receiveTask'));
@@ -353,13 +357,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasReceiveTask() : bool
+    public function hasReceiveTask(): bool
     {
         return $this->hasChild('receiveTask');
     }
 
     /** @return ElementList<ScriptTask> */
-    public function getScriptTask() : ElementList
+    public function getScriptTask(): ElementList
     {
         /** @var ElementList<ScriptTask> $elements */
         $elements = new ElementList($this->getChilds('scriptTask'));
@@ -367,13 +371,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasScriptTask() : bool
+    public function hasScriptTask(): bool
     {
         return $this->hasChild('scriptTask');
     }
 
     /** @return ElementList<SendTask> */
-    public function getSendTask() : ElementList
+    public function getSendTask(): ElementList
     {
         /** @var ElementList<SendTask> $elements */
         $elements = new ElementList($this->getChilds('sendTask'));
@@ -381,13 +385,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasSendTask() : bool
+    public function hasSendTask(): bool
     {
         return $this->hasChild('sendTask');
     }
 
     /** @return ElementList<SequenceFlow> */
-    public function getSequenceFlow() : ElementList
+    public function getSequenceFlow(): ElementList
     {
         /** @var ElementList<SequenceFlow> $elements */
         $elements = new ElementList($this->getChilds('sequenceFlow'));
@@ -395,13 +399,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasSequenceFlow() : bool
+    public function hasSequenceFlow(): bool
     {
         return $this->hasChild('sequenceFlow');
     }
 
     /** @return ElementList<ServiceTask> */
-    public function getServiceTask() : ElementList
+    public function getServiceTask(): ElementList
     {
         /** @var ElementList<ServiceTask> $elements */
         $elements = new ElementList($this->getChilds('serviceTask'));
@@ -409,13 +413,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasServiceTask() : bool
+    public function hasServiceTask(): bool
     {
         return $this->hasChild('serviceTask');
     }
 
     /** @return ElementList<StartEvent> */
-    public function getStartEvent() : ElementList
+    public function getStartEvent(): ElementList
     {
         /** @var ElementList<StartEvent> $elements */
         $elements = new ElementList($this->getChilds('startEvent'));
@@ -423,13 +427,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasStartEvent() : bool
+    public function hasStartEvent(): bool
     {
         return $this->hasChild('startEvent');
     }
 
     /** @return ElementList<SubChoreography> */
-    public function getSubChoreography() : ElementList
+    public function getSubChoreography(): ElementList
     {
         /** @var ElementList<SubChoreography> $elements */
         $elements = new ElementList($this->getChilds('subChoreography'));
@@ -437,13 +441,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasSubChoreography() : bool
+    public function hasSubChoreography(): bool
     {
         return $this->hasChild('subChoreography');
     }
 
     /** @return ElementList<SubProcess> */
-    public function getSubProcess() : ElementList
+    public function getSubProcess(): ElementList
     {
         /** @var ElementList<SubProcess> $elements */
         $elements = new ElementList($this->getChilds('subProcess'));
@@ -451,13 +455,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasSubProcess() : bool
+    public function hasSubProcess(): bool
     {
         return $this->hasChild('subProcess');
     }
 
     /** @return ElementList<Task> */
-    public function getTask() : ElementList
+    public function getTask(): ElementList
     {
         /** @var ElementList<Task> $elements */
         $elements = new ElementList($this->getChilds('task'));
@@ -465,13 +469,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasTask() : bool
+    public function hasTask(): bool
     {
         return $this->hasChild('task');
     }
 
     /** @return ElementList<Transaction> */
-    public function getTransaction() : ElementList
+    public function getTransaction(): ElementList
     {
         /** @var ElementList<Transaction> $elements */
         $elements = new ElementList($this->getChilds('transaction'));
@@ -479,13 +483,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasTransaction() : bool
+    public function hasTransaction(): bool
     {
         return $this->hasChild('transaction');
     }
 
     /** @return ElementList<UserTask> */
-    public function getUserTask() : ElementList
+    public function getUserTask(): ElementList
     {
         /** @var ElementList<UserTask> $elements */
         $elements = new ElementList($this->getChilds('userTask'));
@@ -493,13 +497,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasUserTask() : bool
+    public function hasUserTask(): bool
     {
         return $this->hasChild('userTask');
     }
 
     /** @return ElementList<Association> */
-    public function getAssociation() : ElementList
+    public function getAssociation(): ElementList
     {
         /** @var ElementList<Association> $elements */
         $elements = new ElementList($this->getChilds('association'));
@@ -507,13 +511,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasAssociation() : bool
+    public function hasAssociation(): bool
     {
         return $this->hasChild('association');
     }
 
     /** @return ElementList<Group> */
-    public function getGroup() : ElementList
+    public function getGroup(): ElementList
     {
         /** @var ElementList<Group> $elements */
         $elements = new ElementList($this->getChilds('group'));
@@ -521,13 +525,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasGroup() : bool
+    public function hasGroup(): bool
     {
         return $this->hasChild('group');
     }
 
     /** @return ElementList<TextAnnotation> */
-    public function getTextAnnotation() : ElementList
+    public function getTextAnnotation(): ElementList
     {
         /** @var ElementList<TextAnnotation> $elements */
         $elements = new ElementList($this->getChilds('textAnnotation'));
@@ -535,13 +539,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasTextAnnotation() : bool
+    public function hasTextAnnotation(): bool
     {
         return $this->hasChild('textAnnotation');
     }
 
     /** @return ElementList<Performer> */
-    public function getPerformer() : ElementList
+    public function getPerformer(): ElementList
     {
         /** @var ElementList<Performer> $elements */
         $elements = new ElementList($this->getChilds('performer'));
@@ -549,13 +553,13 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasPerformer() : bool
+    public function hasPerformer(): bool
     {
         return $this->hasChild('performer');
     }
 
     /** @return ElementList<CorrelationSubscription> */
-    public function getCorrelationSubscription() : ElementList
+    public function getCorrelationSubscription(): ElementList
     {
         /** @var ElementList<CorrelationSubscription> $elements */
         $elements = new ElementList($this->getChilds('correlationSubscription'));
@@ -563,47 +567,43 @@ class Process extends CallableElement
         return $elements;
     }
 
-    public function hasCorrelationSubscription() : bool
+    public function hasCorrelationSubscription(): bool
     {
         return $this->hasChild('correlationSubscription');
     }
 
     /** @return ElementList<AbstractElement> */
-    public function getSupports() : ElementList
+    public function getSupports(): ElementList
     {
         return new ElementList($this->getRefChilds('supports'));
     }
 
-    public function hasSupports() : bool
+    public function hasSupports(): bool
     {
         return $this->hasChild('supports');
     }
 
-    public function getProcessType() : string
+    public function getProcessType(): string
     {
-        $value = $this->getAttribute('processType') ?? 'None';
-
-        return (string) $value;
+        return $this->getAttribute('processType') ?? 'None';
     }
 
-    public function hasProcessType() : bool
+    public function hasProcessType(): bool
     {
         return $this->hasAttribute('processType');
     }
 
-    public function getIsClosed() : bool
+    public function getIsClosed(): bool
     {
-        $value = $this->getAttribute('isClosed') ?? 'false';
-
-        return 'true' === $value;
+        return 'true' === ($this->getAttribute('isClosed') ?? 'false');
     }
 
-    public function hasIsClosed() : bool
+    public function hasIsClosed(): bool
     {
         return $this->hasAttribute('isClosed');
     }
 
-    public function getIsExecutable() : ?bool
+    public function getIsExecutable(): ?bool
     {
         $value = $this->getAttribute('isExecutable');
 
@@ -614,12 +614,12 @@ class Process extends CallableElement
         return 'true' === $value;
     }
 
-    public function hasIsExecutable() : bool
+    public function hasIsExecutable(): bool
     {
         return $this->hasAttribute('isExecutable');
     }
 
-    public function getDefinitionalCollaborationRef() : ?AbstractElement
+    public function getDefinitionalCollaborationRef(): ?AbstractElement
     {
         $value = $this->getAttribute('definitionalCollaborationRef');
 
@@ -627,10 +627,10 @@ class Process extends CallableElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasDefinitionalCollaborationRef() : bool
+    public function hasDefinitionalCollaborationRef(): bool
     {
         return $this->hasAttribute('definitionalCollaborationRef');
     }

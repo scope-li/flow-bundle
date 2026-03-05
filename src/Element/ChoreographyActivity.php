@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 abstract class ChoreographyActivity extends FlowNode
 {
     /** @return ElementList<AbstractElement> */
-    public function getParticipantRef() : ElementList
+    public function getParticipantRef(): ElementList
     {
         return new ElementList($this->getRefChilds('participantRef'));
     }
 
-    public function hasParticipantRef() : bool
+    public function hasParticipantRef(): bool
     {
         return $this->hasChild('participantRef');
     }
 
     /** @return ElementList<CorrelationKey> */
-    public function getCorrelationKey() : ElementList
+    public function getCorrelationKey(): ElementList
     {
         /** @var ElementList<CorrelationKey> $elements */
         $elements = new ElementList($this->getChilds('correlationKey'));
@@ -24,31 +26,27 @@ abstract class ChoreographyActivity extends FlowNode
         return $elements;
     }
 
-    public function hasCorrelationKey() : bool
+    public function hasCorrelationKey(): bool
     {
         return $this->hasChild('correlationKey');
     }
 
-    public function getInitiatingParticipantRef() : AbstractElement
+    public function getInitiatingParticipantRef(): AbstractElement
     {
-        $value = $this->getAttribute('initiatingParticipantRef');
-
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById((string) $this->getAttribute('initiatingParticipantRef'));
     }
 
-    public function hasInitiatingParticipantRef() : bool
+    public function hasInitiatingParticipantRef(): bool
     {
         return $this->hasAttribute('initiatingParticipantRef');
     }
 
-    public function getLoopType() : string
+    public function getLoopType(): string
     {
-        $value = $this->getAttribute('loopType') ?? 'None';
-
-        return (string) $value;
+        return $this->getAttribute('loopType') ?? 'None';
     }
 
-    public function hasLoopType() : bool
+    public function hasLoopType(): bool
     {
         return $this->hasAttribute('loopType');
     }

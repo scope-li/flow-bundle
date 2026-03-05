@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Event;
 
 use Scopeli\FlowBundle\Process\ProcessInstanceInterface;
@@ -7,12 +9,9 @@ use Symfony\Contracts\EventDispatcher\Event as ContractEvent;
 
 abstract class AbstractEvent extends ContractEvent
 {
-    protected ProcessInstanceInterface $processInstance;
-
-    public function __construct(ProcessInstanceInterface $processInstance)
-    {
-        $this->processInstance = $processInstance;
-    }
+    public function __construct(
+        protected ProcessInstanceInterface $processInstance,
+    ) {}
 
     public function getProcessInstance(): ProcessInstanceInterface
     {

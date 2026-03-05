@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
 class Escalation extends RootElement
 {
-    public function getName() : ?string
+    public function getName(): ?string
     {
         $value = $this->getAttribute('name');
 
@@ -12,15 +14,15 @@ class Escalation extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getEscalationCode() : ?string
+    public function getEscalationCode(): ?string
     {
         $value = $this->getAttribute('escalationCode');
 
@@ -28,15 +30,15 @@ class Escalation extends RootElement
             return null;
         }
 
-        return (string) $value;
+        return $value;
     }
 
-    public function hasEscalationCode() : bool
+    public function hasEscalationCode(): bool
     {
         return $this->hasAttribute('escalationCode');
     }
 
-    public function getStructureRef() : ?AbstractElement
+    public function getStructureRef(): ?AbstractElement
     {
         $value = $this->getAttribute('structureRef');
 
@@ -44,10 +46,10 @@ class Escalation extends RootElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasStructureRef() : bool
+    public function hasStructureRef(): bool
     {
         return $this->hasAttribute('structureRef');
     }

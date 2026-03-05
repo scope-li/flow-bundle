@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\EventListener;
 
-use Scopeli\FlowBundle\Event\OperationEvent;
 use Scopeli\FlowBundle\Connector\ConnectorRunner;
+use Scopeli\FlowBundle\Event\OperationEvent;
 
 class OperationListener
 {
-    private ConnectorRunner $connectorRunner;
-
-    public function __construct(ConnectorRunner $connectorRunner)
-    {
-        $this->connectorRunner = $connectorRunner;
-    }
+    public function __construct(
+        private readonly ConnectorRunner $connectorRunner,
+    ) {}
 
     public function operationRun(OperationEvent $event): void
     {

@@ -1,62 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
+
+use DOMElement;
 
 class Operation extends BaseElement
 {
-    public function getInMessageRef() : AbstractElement
+    public function getInMessageRef(): AbstractElement
     {
         $child = $this->getChild('inMessageRef');
 
-        assert($child instanceof \DOMElement);
+        assert($child instanceof DOMElement);
         return self::createElement($child, $this->getBpmn());
     }
 
-    public function hasInMessageRef() : bool
+    public function hasInMessageRef(): bool
     {
         return $this->hasChild('inMessageRef');
     }
 
-    public function getOutMessageRef() : ?AbstractElement
+    public function getOutMessageRef(): ?AbstractElement
     {
         $child = $this->getChild('outMessageRef');
 
-        if (!$child instanceof \DOMElement) {
+        if (!$child instanceof DOMElement) {
             return null;
         }
 
         return self::createElement($child, $this->getBpmn());
     }
 
-    public function hasOutMessageRef() : bool
+    public function hasOutMessageRef(): bool
     {
         return $this->hasChild('outMessageRef');
     }
 
     /** @return ElementList<AbstractElement> */
-    public function getErrorRef() : ElementList
+    public function getErrorRef(): ElementList
     {
         return new ElementList($this->getRefChilds('errorRef'));
     }
 
-    public function hasErrorRef() : bool
+    public function hasErrorRef(): bool
     {
         return $this->hasChild('errorRef');
     }
 
-    public function getName() : string
+    public function getName(): string
     {
-        $value = $this->getAttribute('name');
-
-        return (string) $value;
+        return (string) $this->getAttribute('name');
     }
 
-    public function hasName() : bool
+    public function hasName(): bool
     {
         return $this->hasAttribute('name');
     }
 
-    public function getImplementationRef() : ?AbstractElement
+    public function getImplementationRef(): ?AbstractElement
     {
         $value = $this->getAttribute('implementationRef');
 
@@ -64,10 +66,10 @@ class Operation extends BaseElement
             return null;
         }
 
-        return $this->getBpmn()->getById((string) $value);
+        return $this->getBpmn()->getById($value);
     }
 
-    public function hasImplementationRef() : bool
+    public function hasImplementationRef(): bool
     {
         return $this->hasAttribute('implementationRef');
     }

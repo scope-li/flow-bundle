@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Connector;
 
 use ReflectionMethod;
+use RuntimeException;
 use Scopeli\FlowBundle\Element\Activity;
 use Scopeli\FlowBundle\Element\ExtensionElements;
-use RuntimeException;
 use Scopeli\FlowBundle\ElementCamunda\Connector;
 use Scopeli\FlowBundle\ElementCamunda\InputOutput;
 use Scopeli\FlowBundle\Exception\InvalidArgumentException;
@@ -15,24 +17,25 @@ use Scopeli\FlowBundle\Script\ScriptRunner;
 class ConnectorRunner
 {
     /** @var ConnectorInterface[] */
-    private array $connectorInstances = [];
-
-    private ScriptRunner $scriptRunner;
+    private readonly array $connectorInstances;
 
     /**
      * @param ConnectorInterface[] $connectorInstances
      */
-    public function __construct(ScriptRunner $scriptRunner, iterable $connectorInstances)
-    {
-        $this->scriptRunner = $scriptRunner;
-
+    public function __construct(
+        private readonly ScriptRunner $scriptRunner,
+        iterable $connectorInstances,
+    ) {
+        $validated = [];
         foreach ($connectorInstances as $connectorInstance) {
             if (!$connectorInstance instanceof ConnectorInterface) {
                 throw new InvalidArgumentException(sprintf('All $connectorInstances must implement %s', ConnectorInterface::class));
             }
 
-            $this->connectorInstances[] = $connectorInstance;
+            $validated[] = $connectorInstance;
         }
+
+        $this->connectorInstances = $validated;
     }
 
     /**
@@ -88,20 +91,20 @@ class ConnectorRunner
             $result = \call_user_func_array($callback, $arguments);
             if (false === $result) {
                 throw new RuntimeException(
-                    sprintf('Methode call "run" on "%s" failed', \get_class($connectorInstance))
+                    sprintf('Methode call "run" on "%s" failed', $connectorInstance::class)
                 );
             }
 
             if (!\is_array($result)) {
                 throw new RuntimeException(
-                    sprintf('The result from "run" on "%s" must be an array', \get_class($connectorInstance))
+                    sprintf('The result from "run" on "%s" must be an array', $connectorInstance::class)
                 );
             }
 
             return $result;
         }
 
-        throw new RuntimeException(sprintf('Method "run" not found in "%s"', \get_class($connectorInstance)));
+        throw new RuntimeException(sprintf('Method "run" not found in "%s"', $connectorInstance::class));
     }
 
     /**
@@ -111,7 +114,7 @@ class ConnectorRunner
     {
         $buffer = [];
 
-        $ref = new ReflectionMethod(\get_class($connectorInstance), 'run');
+        $ref = new ReflectionMethod($connectorInstance::class, 'run');
         foreach ($ref->getParameters() as $parameter) {
             $buffer[] = $inputArguments[$parameter->getName()] ?? $parameter->getDefaultValue();
         }
@@ -122,7 +125,7 @@ class ConnectorRunner
     private function getConnectorInstance(string $class): ConnectorInterface
     {
         foreach ($this->connectorInstances as $connectorInstance) {
-            if (\get_class($connectorInstance) === $class) {
+            if ($connectorInstance::class === $class) {
                 return $connectorInstance;
             }
         }

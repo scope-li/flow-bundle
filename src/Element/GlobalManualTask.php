@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Element;
 
-class GlobalManualTask extends GlobalTask
-{
-}
+class GlobalManualTask extends GlobalTask {}

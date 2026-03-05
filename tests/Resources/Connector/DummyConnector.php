@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scopeli\FlowBundle\Resources\Connector;
 
 use Scopeli\FlowBundle\Connector\ConnectorInterface;
